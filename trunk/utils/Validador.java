@@ -75,7 +75,7 @@ public class Validador {
 	static public boolean isAlphaChar(char c){
 		
 		if ((c >= 'a' && c <= 'z' ) || (c >= 'A' && c <= 'Z' ) ||
-			(" 'ÁÉÍÓÚáéíóúäëïöüÄËÏÖÜñÑ".indexOf(String.valueOf(c)) >= 0)){
+			(" 'ÁÉÍÓÚáéíóúäëïöüÄËÏÖÜñÑçÇ".indexOf(String.valueOf(c)) >= 0)){	
 			return true;
 		}
 		return false;			  
@@ -141,6 +141,7 @@ public class Validador {
 		nombre = nombre.trim();
 		if (!isAlpha(nombre)) return false;
 		if (nombre.length() < 2) return false;
+		if (nombre.length() > 45) return false;
 		if (countOf('\'', nombre) > 1) return false;
 		
 		String split[] = nombre.toLowerCase().split(" ");
@@ -162,25 +163,31 @@ public class Validador {
 		return isValidNombre(nombre);
 	}
 	
-	static public void validateCategoria(int categoria, int dia, int mes, int anio) throws ValidadorException{
-		if (!isValidCategoria(categoria, dia, mes, anio)) throw new ValidadorException("La categoría no corresponde a la edad del socio");
+	static public void validateCategoria(int categoria, boolean titular, int dia, int mes, int anio) throws ValidadorException{
+		if (!isValidCategoria(categoria, titular, dia, mes, anio)) throw new ValidadorException("La categoría no corresponde a la edad del socio");
 	}
+	
 
-	static public boolean isValidCategoria(int categoria, int dia, int mes, int anio){
+	static public boolean isValidCategoria(int categoria, boolean titular, int dia, int mes, int anio){
 								
-		if (categoria == Categoria.VITALICIO || categoria == Categoria.FAMILIAR)
-			return true;
-		
+		if (categoria == Categoria.VITALICIO) return true;
+			
 		//La fecha recibida es valida.
 		Date d = new Date(anio - 1900,  mes, dia);
 
 		Calendar nacimiento = Calendar.getInstance();
 		nacimiento.setTime(d);
 		
-		Date now = new Date(Calendar.getInstance().getTime().getYear(),
-							Calendar.getInstance().getTime().getMonth(),
-							Calendar.getInstance().getTime().getDate());
+		if (categoria == Categoria.FAMILIAR){
+			if (titular){
+				return (d.compareTo(DateUtil.getDate(21)) <= 0);
+			}
+			else {
+				return true;
+			}
+		}
 		
+		Date now = DateUtil.getDate(0);
 		
 		if (categoria == Categoria.MENOR){
 			nacimiento.add(Calendar.YEAR,14);

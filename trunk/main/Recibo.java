@@ -16,11 +16,8 @@ public class Recibo  implements java.io.Serializable {
      private int idRecibo;
      private Socio socio;
      private Liquidacion liquidacion;
-     private Date fecha;
-     private int mes;
-     private int anio;
      private int numeroRecibo;
-     private int valor;
+     private float valor;
      private boolean devuelto;
 
 
@@ -32,13 +29,10 @@ public class Recibo  implements java.io.Serializable {
 
     
     /** full constructor */
-    public Recibo(int idRecibo, Socio socio, Liquidacion liquidacion, Date fecha, int mes, int anio, int numeroRecibo, int valor, boolean devuelto) {
+    public Recibo(int idRecibo, Socio socio, Liquidacion liquidacion, int numeroRecibo, float valor, boolean devuelto) {
         this.idRecibo = idRecibo;
         this.socio = socio;
         this.liquidacion = liquidacion;
-        this.fecha = fecha;
-        this.mes = mes;
-        this.anio = anio;
         this.numeroRecibo = numeroRecibo;
         this.valor = valor;
         this.devuelto = devuelto;
@@ -72,30 +66,6 @@ public class Recibo  implements java.io.Serializable {
         this.liquidacion = liquidacion;
     }
 
-    public Date getFecha() {
-        return this.fecha;
-    }
-    
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getMes() {
-        return this.mes;
-    }
-    
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getAnio() {
-        return this.anio;
-    }
-    
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }
-
     public int getNumeroRecibo() {
         return this.numeroRecibo;
     }
@@ -104,11 +74,11 @@ public class Recibo  implements java.io.Serializable {
         this.numeroRecibo = numeroRecibo;
     }
 
-    public int getValor() {
+    public float getValor() {
         return this.valor;
     }
     
-    public void setValor(int valor) {
+    public void setValor(float valor) {
         this.valor = valor;
     }
 

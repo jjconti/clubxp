@@ -8,6 +8,7 @@ package guiClub;
 
 import java.awt.event.ActionEvent;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -128,7 +129,9 @@ public class FrmAltaSocio extends JDialog {
         panelAltaSocio.add(labelCategoria, new AbsoluteConstraints(30, 250, -1, -1));
 
         //categoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Menor", "Cadete", "Mayor", "Vitalicio" }));
-        categoria.setModel(new DefaultComboBoxModel(AdministradorDeCategorias.getCategorias().toArray()));
+        List categorias = AdministradorDeCategorias.getCategorias();
+        categorias.remove(AdministradorDeCategorias.getCategoriaFamiliar());
+        categoria.setModel(new DefaultComboBoxModel(categorias.toArray()));
         panelAltaSocio.add(categoria, new AbsoluteConstraints(100, 250, 270, 20));
 
         panelAltaSocio.add(edadAfiliacion, new AbsoluteConstraints(130, 210, 40, -1));
@@ -181,7 +184,7 @@ public class FrmAltaSocio extends JDialog {
     		Validador.validateFechaNacimiento(diaNacimiento.getSelectedIndex()+1, mesNacimiento.getSelectedIndex(),
     										((Integer)anioNacimiento.getSelectedItem()).intValue(),
     										Integer.valueOf(edadAfiliacion.getText()).intValue());
-    		Validador.validateCategoria(((Categoria)categoria.getSelectedItem()).getIdCategoria(),diaNacimiento.getSelectedIndex()+1,
+    		Validador.validateCategoria(((Categoria)categoria.getSelectedItem()).getIdCategoria(), false, diaNacimiento.getSelectedIndex()+1,
     				mesNacimiento.getSelectedIndex(),((Integer)anioNacimiento.getSelectedItem()).intValue());
     	
     		Date d = new Date(((Integer)anioNacimiento.getSelectedItem()).intValue()-1900,

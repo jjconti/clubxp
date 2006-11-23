@@ -32,8 +32,8 @@ public class TestAdministradorDeSocios extends TestCase {
 		socio = AdministradorDeSocios.ObtenerSocio(socio.getIdSocio());
 		
 		//Comprueba que esté todo bien
-		assertEquals(socio.getApellido(),"Apellido");
-		assertEquals(socio.getNombre(),"Nombre");
+		assertEquals(socio.getApellido(),"APELLIDO");
+		assertEquals(socio.getNombre(),"NOMBRE");
 		assertEquals(socio.getZona().getIdZona(),1);
 		assertEquals(socio.getCategoria().getIdCategoria(),2);
 		assertEquals(socio.getTipoDocumento(),"DNI");
@@ -50,7 +50,11 @@ public class TestAdministradorDeSocios extends TestCase {
 		Socio socio = AdministradorDeSocios.CrearSocio(1,2,"Nombre","Apellido","DNI",33222333, fechaNac, 5);
 			
 		//Lo elimina
-		AdministradorDeSocios.EliminarSocio(socio.getIdSocio());
+		try {
+			AdministradorDeSocios.EliminarSocio(socio.getIdSocio());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		//Se asegura que se haya eliminado
 		assertNull(AdministradorDeSocios.ObtenerSocio(socio.getIdSocio()));
@@ -71,8 +75,8 @@ public class TestAdministradorDeSocios extends TestCase {
 		//Obtiene el socio modificado
 		socio = AdministradorDeSocios.ObtenerSocio(socio.getIdSocio());
 		
-		assertEquals("NuevoNombre", socio.getNombre());
-		assertEquals("NuevoApellido", socio.getApellido());
+		assertEquals("NUEVONOMBRE", socio.getNombre());
+		assertEquals("NUEVOAPELLIDO", socio.getApellido());
 		assertEquals(33222334, socio.getDni());		
 		assertEquals(2, socio.getZona().getIdZona());
 		assertEquals(3, socio.getCategoria().getIdCategoria());

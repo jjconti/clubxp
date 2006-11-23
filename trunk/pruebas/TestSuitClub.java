@@ -19,7 +19,10 @@ public class TestSuitClub extends TestCase {
         suite.addTest(TestAdministradorDeSocios.suite());
         suite.addTest(TestDB.suite());
         suite.addTest(TestValidador.suite());
-
+        suite.addTest(TestAdministradorDeFamilias.suite());
+        suite.addTest(TestAdministradorDeCategorias.suite());
+        suite.addTest(TestAdministradorDeLiquidaciones.suite());
+        
         return suite;
     }
 	

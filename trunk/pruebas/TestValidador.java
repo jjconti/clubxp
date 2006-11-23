@@ -1,13 +1,12 @@
 package pruebas;
 
-import utils.Validador;
-import utils.ValidadorException;
+import java.util.Calendar;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.util.*;
-
 import main.Categoria;
+import utils.Validador;
 
 public class TestValidador extends TestCase {
 
@@ -209,69 +208,74 @@ public class TestValidador extends TestCase {
 		int anio82 = calendar.getTime().getYear() + 1900;
 		
 		//Los socios vitalicios pueden tener cualquier edad
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio0));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio4));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio11));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio12));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio13));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio14));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio19));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio20));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio21));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio22));
-		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, dia, mes, anio82));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio0));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio4));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio11));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio12));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio13));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio14));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio19));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio20));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio21));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio22));
+		assertTrue(Validador.isValidCategoria(Categoria.VITALICIO, false, dia, mes, anio82));
 		
 		//Los menores deben tener entre 0 y 13 incluido
-		assertTrue(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio0));
-		assertTrue(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio4));
-		assertTrue(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio11));
-		assertTrue(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio12));
-		assertTrue(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio13));
-		assertFalse(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio14));
-		assertFalse(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio19));
-		assertFalse(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio20));
-		assertFalse(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio21));
-		assertFalse(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio22));
-		assertFalse(Validador.isValidCategoria(Categoria.MENOR, dia, mes, anio82));
+		assertTrue(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio0));
+		assertTrue(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio4));
+		assertTrue(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio11));
+		assertTrue(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio12));
+		assertTrue(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio13));
+		assertFalse(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio14));
+		assertFalse(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio19));
+		assertFalse(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio20));
+		assertFalse(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio21));
+		assertFalse(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio22));
+		assertFalse(Validador.isValidCategoria(Categoria.MENOR, false, dia, mes, anio82));
 		
 		//Los cadetes deben tener entre 14 y 20 incluido		
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio0));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio4));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio11));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio12));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio13));
-		assertTrue(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio14));
-		assertTrue(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio19));
-		assertTrue(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio20));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio21));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio22));
-		assertFalse(Validador.isValidCategoria(Categoria.CADETE, dia, mes, anio82));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio0));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio4));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio11));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio12));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio13));
+		assertTrue(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio14));
+		assertTrue(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio19));
+		assertTrue(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio20));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio21));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio22));
+		assertFalse(Validador.isValidCategoria(Categoria.CADETE, false, dia, mes, anio82));
 		
 		//Los mayores deben tener 21 o mas.
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio0));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio4));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio11));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio12));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio13));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio14));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio19));
-		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio20));
-		assertTrue(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio21));
-		assertTrue(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio22));
-		assertTrue(Validador.isValidCategoria(Categoria.MAYOR, dia, mes, anio82));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio0));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio4));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio11));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio12));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio13));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio14));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio19));
+		assertFalse(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio20));
+		assertTrue(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio21));
+		assertTrue(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio22));
+		assertTrue(Validador.isValidCategoria(Categoria.MAYOR, false, dia, mes, anio82));
 				
 		//Los socios familiares pueden tener cualquier edad
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio0));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio4));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio11));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio12));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio13));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio14));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio19));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio20));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio21));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio22));
-		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, dia, mes, anio82));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio0));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio4));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio11));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio12));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio13));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio14));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio19));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio20));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio21));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio22));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, false, dia, mes, anio82));
+
+		assertFalse(Validador.isValidCategoria(Categoria.FAMILIAR, true, dia, mes, anio20));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, true, dia, mes, anio21));
+		assertTrue(Validador.isValidCategoria(Categoria.FAMILIAR, true, dia, mes, anio22));
+
 		
 	}
 	

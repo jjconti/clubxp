@@ -21,11 +21,8 @@ public class Main {
 		
 		socio1.setApellido("CAMBI'OOOOO");
 		socio1.setNombre("oeoe");
-		
-		s.saveOrUpdate(socio1);
-		s.flush();
-		
-		//s.beginTransaction().commit();
+	
+		s.beginTransaction().commit();
 		
 	}
 

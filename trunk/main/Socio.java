@@ -191,6 +191,9 @@ public class Socio  implements java.io.Serializable {
         this.recibos = recibos;
     }
   
+    public boolean isTitular() {
+    	return !this.getSocios().isEmpty();
+    }
 
 
 

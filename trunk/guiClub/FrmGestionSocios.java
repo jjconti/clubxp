@@ -132,7 +132,7 @@ public class FrmGestionSocios extends JDialog {
 				try {
 					AdministradorDeSocios.EliminarSocio(idSocioElegido.intValue());
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(this,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 				}
 				sociosModel.removeRow(row);
 				
@@ -181,7 +181,7 @@ public class FrmGestionSocios extends JDialog {
 			if (s.getSocio() == null){
 				aux.addElement(null);
 			}else{
-				aux.addElement(s.getIdSocioI());
+				aux.addElement(s.getSocio().getIdSocioI());
 			}
 				
 			aux.addElement(s.getZona().getIdZonaI());

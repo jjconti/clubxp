@@ -32,11 +32,16 @@ public class Main {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName() );
         } catch (Exception e) { }
         
-          FrmGestionSocios s1 = new FrmGestionSocios(); 
-          s1.setVisible(true);
-         
-         //FrmAltaSocio s2 = new FrmAltaSocio(); 
+         // FrmGestionSocios s1 = new FrmGestionSocios(); 
+          //s1.setVisible(true);
+          
+          //FrmGestionGrupos g1 = new FrmGestionGrupos();
+          //g1.setVisible(true);
+          
+         //FrmAltaSocio s2 = new FrmAltaSocio(s1); 
          //s2.setVisible(true);
+        
+        new FrmPrincipal().show();
           
     }
     

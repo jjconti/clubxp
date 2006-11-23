@@ -90,7 +90,17 @@ public class Liquidacion  implements java.io.Serializable {
     }
    
 
-
+    /**
+	 * Metodo usado para las pruebas. Retorna un recibo correspondiente al socio
+	 * pasado como parametro. 
+	 * Si no existe un recibo explicitamente para ese socio, retorna null 
+	 * @return
+	 */
+	public Recibo getReciboFor(Socio socio){
+		
+		
+		return null;
+	}
 
 
 

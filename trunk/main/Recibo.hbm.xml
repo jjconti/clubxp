@@ -14,19 +14,10 @@
         <many-to-one name="liquidacion" class="main.Liquidacion" fetch="select">
             <column name="id_liq" not-null="true" />
         </many-to-one>
-        <property name="fecha" type="date">
-            <column name="fecha" length="10" not-null="true" />
-        </property>
-        <property name="mes" type="int">
-            <column name="mes" not-null="true" />
-        </property>
-        <property name="anio" type="int">
-            <column name="anio" not-null="true" />
-        </property>
         <property name="numeroRecibo" type="int">
             <column name="numero_recibo" not-null="true" />
         </property>
-        <property name="valor" type="int">
+        <property name="valor" type="float">
             <column name="valor" not-null="true" />
         </property>
         <property name="devuelto" type="boolean">

@@ -36,7 +36,7 @@ public class AdministradorDeSocios {
 			asociado = false;
 		}
 		
-		Socio socio = new Socio(0,zona,cat,nombre,apellido,documento, fechaNacimiento, 
+		Socio socio = new Socio(0,zona,cat,nombre.toUpperCase(),apellido.toUpperCase(),documento, fechaNacimiento, 
 								edadAfiliacion, asociado, tipoDocumento );
 		
 		s.save(socio);
@@ -66,8 +66,8 @@ public class AdministradorDeSocios {
 		}
 		
 		socio.setZona(zona);
-		socio.setApellido(apellido.trim());
-		socio.setNombre(nombre.trim());
+		socio.setApellido(apellido.trim().toUpperCase());
+		socio.setNombre(nombre.trim().toUpperCase());
 		socio.setCategoria(cat);
 		socio.setDni(documento);
 		socio.setEdadAfiliacion(edadAfiliacion);
@@ -81,15 +81,20 @@ public class AdministradorDeSocios {
 	return socio;
 }
 	
-	public static void EliminarSocio(int idSocio) {
+	public static void EliminarSocio(int idSocio) throws Exception {
 		Session s = HibernateUtil.getSession();
 		Socio socio = ObtenerSocio(idSocio);
 		
-		s.beginTransaction();
-		
-		s.delete(socio);
-		
-		s.getTransaction().commit();
+		try {
+			s.beginTransaction();
+			
+			s.delete(socio);
+			
+			s.getTransaction().commit();
+		} catch(Exception e){
+			throw new Exception("No se puede eliminar el socio. " +
+					"Compruebe que no sea Titular de un Grupo Familiar.");
+		}
 		
 	}
 	
@@ -109,9 +114,7 @@ public class AdministradorDeSocios {
 		catch (Exception e){
 			socio = null;
 		}
-		
 		s.getTransaction().commit();
-		
 		
 		return socio;
 	}
@@ -137,7 +140,11 @@ public class AdministradorDeSocios {
 		Session s = HibernateUtil.getSession();
 		s.beginTransaction();
 		
-		Query q = s.createQuery("delete from Socio");
+		//Primero eliminamos a los asociados
+		Query q = s.createQuery("delete from Socio s where s.asociado = true");
+		q.executeUpdate();
+		
+		q = s.createQuery("delete from Socio");
 		q.executeUpdate();
 		
 		s.getTransaction().commit();
