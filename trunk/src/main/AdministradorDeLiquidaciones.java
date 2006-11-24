@@ -243,6 +243,16 @@ public class AdministradorDeLiquidaciones {
 		
 	}
 	
+	public static List getRecibos(){
+		Session s = HibernateUtil.getSession();
+		
+		Query q = s.createQuery("from Recibo");
+		List lista = q.list();
+		
+		return lista;
+		
+	}
+	
 //	public static List getPrimerReciboQueDebe(Socio socio){
 //		Session s = HibernateUtil.getSession();
 //		
