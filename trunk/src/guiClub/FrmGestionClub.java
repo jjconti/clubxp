@@ -6,6 +6,10 @@
 
 package guiClub;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+
 /**
  *
  * @author  
@@ -15,6 +19,7 @@ public class FrmGestionClub extends javax.swing.JFrame {
     /** Creates new form FrmGestionClub */
     public FrmGestionClub() {
         initComponents();
+        center();
     }
     
     /** This method is called from within the constructor to
@@ -40,7 +45,20 @@ public class FrmGestionClub extends javax.swing.JFrame {
         pack();
     }
    
-    
+	 /**
+     * Centers the frame on the screen.
+     *
+
+     * This centering service is more or less in {@link UiUtil}; this duplication 
+     * is justified only because the use of {@link UiUtil} would entail more 
+     * class loading, which is not desirable for a splash screen.
+     */
+     private void center(){
+       Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+       Rectangle frame = getBounds();
+       setLocation((screen.width - frame.width)/2, (screen.height - frame.height)/2);
+     }
+     
     /**
      * @param args the command line arguments
      */

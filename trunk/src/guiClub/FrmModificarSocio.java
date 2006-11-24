@@ -6,6 +6,9 @@
 
 package guiClub;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -30,6 +33,7 @@ public class FrmModificarSocio extends JDialog {
         ventanaPadre = ventana;
         socio = s;
     	initComponents();
+    	center();
     }
     
     /** This method is called from within the constructor to
@@ -231,6 +235,19 @@ public class FrmModificarSocio extends JDialog {
     	dispose();
     }
     
+	 /**
+     * Centers the frame on the screen.
+     *
+
+     * This centering service is more or less in {@link UiUtil}; this duplication 
+     * is justified only because the use of {@link UiUtil} would entail more 
+     * class loading, which is not desirable for a splash screen.
+     */
+     private void center(){
+       Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+       Rectangle frame = getBounds();
+       setLocation((screen.width - frame.width)/2, (screen.height - frame.height)/2);
+     }
             
     // Variables declaration 
     private JButton aceptar;

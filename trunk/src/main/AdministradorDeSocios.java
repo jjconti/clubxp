@@ -77,6 +77,10 @@ public class AdministradorDeSocios {
 		try {
 			s.beginTransaction();
 			
+			//Primero eliminamos los recibos que apuntan a este socio.
+			Query q = s.createQuery("delete from Recibo r where r.socio.idSocio = " + idSocio);
+			q.executeUpdate();
+			 
 			s.delete(socio);
 			
 			s.getTransaction().commit();

@@ -3,6 +3,8 @@ package guiClub;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Label;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -24,6 +26,7 @@ public class FrmPrincipal extends JFrame {
  
     public FrmPrincipal() {
         initComponents();
+        center();
     }
     
    
@@ -43,7 +46,8 @@ public class FrmPrincipal extends JFrame {
         getContentPane().setLayout(new AbsoluteLayout());
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sistema de Gesti\u00f3n de C\u00e1tedra");
+        setResizable(false);
+        setTitle("Sistema de Gestión del Club Americano");
         panelPrincipal.setLayout(new AbsoluteLayout());
 
         panelPrincipal.setPreferredSize(new Dimension(400, 150));
@@ -74,7 +78,7 @@ public class FrmPrincipal extends JFrame {
             
         botonVerRecibos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                //botonVerRecibosActionPerformed(evt);
+                botonVerRecibosActionPerformed(evt);
             }
         });
 
@@ -83,18 +87,22 @@ public class FrmPrincipal extends JFrame {
         botonSeguimiento.setText("Seguimiento de recibos");
         panelLiquidacion.add(botonSeguimiento, new AbsoluteConstraints(20, 80, 200, -1));
 
-        if (!AdministradorDeLiquidaciones.existenLiquidaciones){
-        	botonVerRecibos.setEnabled(false);
-        	botonSeguimiento.setEnabled(false);
-        }
+        //if (!AdministradorDeLiquidaciones.existenLiquidaciones){
+        //	botonVerRecibos.setEnabled(false);
+        //	botonSeguimiento.setEnabled(false);
+        //}
+        botonVerRecibos.setEnabled(true);
+        botonSeguimiento.setEnabled(true);
+        
+        
         
         panelPrincipal.add(panelLiquidacion, new AbsoluteConstraints(20, 190, 240, 120));
         panelLiquidacion.getAccessibleContext().setAccessibleName("liquidacion");
 
         panelGestion.setLayout(new AbsoluteLayout());
 
-        panelGestion.setBorder(new TitledBorder("Gestion"));
-        botonSocios.setText("Gestion de Socios");
+        panelGestion.setBorder(new TitledBorder("Gestión"));
+        botonSocios.setText("Gestión de Socios");
         botonSocios.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 botonSociosActionPerformed(evt);
@@ -103,7 +111,7 @@ public class FrmPrincipal extends JFrame {
 
         panelGestion.add(botonSocios, new AbsoluteConstraints(30, 20, 180, -1));
 
-        botonGrupos.setText("Gestion de Grupos Familiares");
+        botonGrupos.setText("Gestión de Grupos Familiares");
         botonGrupos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 botonGruposActionPerformed(evt);
@@ -114,7 +122,7 @@ public class FrmPrincipal extends JFrame {
 
         panelPrincipal.add(panelGestion, new AbsoluteConstraints(20, 90, 240, 90));
 
-        labelTitulo.setText("<html><font size=6><b>Sistema de Gestion del Club Americano");
+        labelTitulo.setText("<html><font size=6><b>Sistema de Gestión del Club Americano");
         panelPrincipal.add(labelTitulo, new AbsoluteConstraints(40, 30, -1, -1));
 
         botonSalir.setText("Salir");
@@ -137,13 +145,13 @@ public class FrmPrincipal extends JFrame {
 
     }
     
-/*
+
     private void botonVerRecibosActionPerformed(ActionEvent evt) {
-     new FrmVerRecibos().setVisible(true);  
+    	new FrmRecibos().setVisible(true);  
     }
-*/
+
     private void botonLiquidarActionPerformed(ActionEvent evt) {
-     liquidar().setVisible(true);  
+    	liquidar().setVisible(true);  
     }
     
     
@@ -164,6 +172,20 @@ public class FrmPrincipal extends JFrame {
     private void botonSalirActionPerformed(ActionEvent evt) {
     	System.exit(0);
     }
+    
+	 /**
+     * Centers the frame on the screen.
+     *
+
+     * This centering service is more or less in {@link UiUtil}; this duplication 
+     * is justified only because the use of {@link UiUtil} would entail more 
+     * class loading, which is not desirable for a splash screen.
+     */
+     private void center(){
+       Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+       Rectangle frame = getBounds();
+       setLocation((screen.width - frame.width)/2, (screen.height - frame.height)/2);
+     }
     
   
     private JButton botonGrupos;

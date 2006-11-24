@@ -10,7 +10,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import main.AdministradorDeFamilias;
+import main.AdministradorDeLiquidaciones;
 import main.AdministradorDeSocios;
+import main.Categoria;
 import main.Socio;
 
 public class TestAdministradorDeSocios extends TestCase {
@@ -51,6 +53,17 @@ public class TestAdministradorDeSocios extends TestCase {
 		assertFalse(socio.isAsociado());	
 	}
 	
+	public void testCrearSocioCategoriaFamiliar(){
+		Date fecha = new Date("9/12/1983");
+		try {
+			AdministradorDeSocios.CrearSocio(1,Categoria.FAMILIAR,"Nombre","Apellido","DNI",31234345,fecha,10);
+			fail();
+		} catch (ValidadorException e) {
+			
+		}
+		
+	}
+	
 	public void testEliminarSocio() throws ValidadorException {
 		
 		//Crea un socio
@@ -66,6 +79,22 @@ public class TestAdministradorDeSocios extends TestCase {
 		
 		//Se asegura que se haya eliminado
 		assertNull(AdministradorDeSocios.ObtenerSocio(socio.getIdSocio()));
+		
+	}
+	
+	public void testEliminarSocioConRecibos() throws Exception{
+		//Crea un socio
+		Date fechaNac = new Date("10/15/1990");
+		Socio socio1 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "Socio1", "Apellido1", "DNI", 33222333, fechaNac, 1);
+		Socio socio2 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "Socio2", "Apellido2", "DNI", 33222334, fechaNac, 2);
+
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		
+		AdministradorDeSocios.EliminarSocio(socio1.getIdSocio());
+		AdministradorDeSocios.EliminarSocio(socio2.getIdSocio());
+
+		assertNull(AdministradorDeSocios.ObtenerSocio(socio1.getIdSocio()));
+		assertNull(AdministradorDeSocios.ObtenerSocio(socio2.getIdSocio()));
 		
 	}
 	
@@ -120,10 +149,10 @@ public class TestAdministradorDeSocios extends TestCase {
 		
 		//Crea un socio
 		Date fechaNac = new Date("10/15/1990");
-		Socio socio1 = AdministradorDeSocios.CrearSocio(1, 2, "Socio1", "Apellido1", "DNI", 33222333, fechaNac, 1);
-		Socio socio2 = AdministradorDeSocios.CrearSocio(1, 2, "Socio2", "Apellido2", "DNI", 33222334, fechaNac, 2);
-		Socio socio3 = AdministradorDeSocios.CrearSocio(1, 2, "Socio3", "Apellido3", "DNI", 33222335, fechaNac, 3);
-		Socio socio4 = AdministradorDeSocios.CrearSocio(1, 2, "Socio4", "Apellido4", "DNI", 33222336, fechaNac, 4);
+		Socio socio1 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "Socio1", "Apellido1", "DNI", 33222333, fechaNac, 1);
+		Socio socio2 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "Socio2", "Apellido2", "DNI", 33222334, fechaNac, 2);
+		Socio socio3 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "Socio3", "Apellido3", "DNI", 33222335, fechaNac, 3);
+		Socio socio4 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "Socio4", "Apellido4", "DNI", 33222336, fechaNac, 4);
 			
 		List l = AdministradorDeSocios.getSocios();
 		Socio socio5 = AdministradorDeSocios.CrearSocio(1, 2, "Socio5", "Apellido5", "DNI", 33222337, fechaNac, 5);

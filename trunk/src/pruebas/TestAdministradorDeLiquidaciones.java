@@ -1,15 +1,16 @@
 package pruebas;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.Vector;
 
-import utils.DateUtil;
-import utils.HibernateUtil;
-import utils.ValidadorException;
-
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import main.AdministradorDeFamilias;
 import main.AdministradorDeLiquidaciones;
 import main.AdministradorDeSocios;
@@ -17,10 +18,9 @@ import main.Categoria;
 import main.Liquidacion;
 import main.Recibo;
 import main.Socio;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import utils.DateUtil;
+import utils.HibernateUtil;
+import utils.ValidadorException;
 
 public class TestAdministradorDeLiquidaciones extends TestCase {
 
@@ -98,8 +98,8 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		fecha.set(2006, 0, 20);
 		Date fecha20Ene06 = fecha.getTime();
 		
-		fecha.set(2006, 0, 25);
-		Date fecha25Ene06 = fecha.getTime();
+//		fecha.set(2006, 0, 25);
+//		Date fecha25Ene06 = fecha.getTime();
 		
 		fecha.set(2006, 1, 1);
 		Date fecha1Feb06 = fecha.getTime();
@@ -298,8 +298,34 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 			Recibo r = (Recibo) i.next();
 			assertFalse(r.isDevuelto());
 			assertEquals(r.getLiquidacion(), ultimaLiq);
-			//VALIDAR EL CAMPO NUMERO DEL RECIBO!
 		}
+				
+	}
+	
+	public void testHacerLiquidacionNumeroRecibo(){
+		
+		//En la base de datos ya hay socios cargados
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		//El socio 0 no pagó el primer mes
+		((Recibo) AdministradorDeLiquidaciones.getUltimaLiquidacion().getRecibosFor(socios[0]).get(0)).setDevuelto(true);
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		
+		
+		SortedSet numeros = new TreeSet();
+		Iterator i = AdministradorDeLiquidaciones.getRecibos().iterator(); 
+		while(i.hasNext()){
+			Recibo r = (Recibo) i.next();
+			numeros.add(new Integer(r.getNumeroRecibo()));
+		}
+		
+		i = numeros.iterator();
+		int n = 1;
+		while (i.hasNext()){
+			Integer num = (Integer) i.next();
+			assertEquals(n, num.intValue());
+			n++;
+		}
+		
 				
 	}
 	
