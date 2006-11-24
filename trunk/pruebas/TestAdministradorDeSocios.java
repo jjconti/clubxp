@@ -1,9 +1,17 @@
 package pruebas;
 
-import main.*;
-import junit.framework.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+
+import utils.ValidadorException;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import main.AdministradorDeFamilias;
+import main.AdministradorDeSocios;
+import main.Socio;
 
 public class TestAdministradorDeSocios extends TestCase {
 
@@ -58,6 +66,26 @@ public class TestAdministradorDeSocios extends TestCase {
 		
 		//Se asegura que se haya eliminado
 		assertNull(AdministradorDeSocios.ObtenerSocio(socio.getIdSocio()));
+		
+	}
+	
+	public void testEliminarJefeFamilia() throws ValidadorException {
+		
+		//Crea un socio titular de una familia
+		Date fechaNac = new Date("10/15/1980");
+		Socio socio1 = AdministradorDeSocios.CrearSocio(1,2,"Nombre","Apellido","DNI",33222333, fechaNac, 5);
+		Socio socio2 = AdministradorDeSocios.CrearSocio(1,2,"Nombre","Apellido","DNI",33222333, fechaNac, 5);
+		Vector asociados = new Vector();
+		asociados.add(socio2.getIdSocioI());
+		AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados);
+		
+		//Lo elimina
+		try {
+			AdministradorDeSocios.EliminarSocio(socio1.getIdSocio());
+			fail();
+		} catch (Exception e) {		}
+		
+		AdministradorDeFamilias.EliminarFamilia(socio1.getIdSocio());
 		
 	}
 	

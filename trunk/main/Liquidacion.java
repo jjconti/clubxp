@@ -3,7 +3,10 @@ package main;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.Vector;
+import java.util.List;;
 
 
 /**
@@ -90,16 +93,23 @@ public class Liquidacion  implements java.io.Serializable {
     }
    
 
-    /**
-	 * Metodo usado para las pruebas. Retorna un recibo correspondiente al socio
+    /***
+	 * Metodo usado para las pruebas. Retorna una lista de recibos correspondiente al socio
 	 * pasado como parametro. 
-	 * Si no existe un recibo explicitamente para ese socio, retorna null 
+	 * Si no existe un recibo explicitamente para ese socio, retorna una lista vacia 
 	 * @return
 	 */
-	public Recibo getReciboFor(Socio socio){
+	public List getRecibosFor(Socio socio){
+		Vector lista = new Vector();
 		
-		
-		return null;
+		Iterator i = this.recibos.iterator();
+		while(i.hasNext()){
+			Recibo r = (Recibo) i.next();
+			if (r.getSocio() == socio) {
+				lista.add(r);
+			}
+		}
+		return lista;
 	}
 
 

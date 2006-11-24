@@ -16,9 +16,12 @@ public class Recibo  implements java.io.Serializable {
      private int idRecibo;
      private Socio socio;
      private Liquidacion liquidacion;
+     private int mes;
+     private int anio;
      private int numeroRecibo;
-     private float valor;
+     private int valor;
      private boolean devuelto;
+     private String valorStr;
 
 
     // Constructors
@@ -29,13 +32,16 @@ public class Recibo  implements java.io.Serializable {
 
     
     /** full constructor */
-    public Recibo(int idRecibo, Socio socio, Liquidacion liquidacion, int numeroRecibo, float valor, boolean devuelto) {
+    public Recibo(int idRecibo, Socio socio, Liquidacion liquidacion, int mes, int anio, int numeroRecibo, int valor, boolean devuelto, String valorStr) {
         this.idRecibo = idRecibo;
         this.socio = socio;
         this.liquidacion = liquidacion;
+        this.mes = mes;
+        this.anio = anio;
         this.numeroRecibo = numeroRecibo;
         this.valor = valor;
         this.devuelto = devuelto;
+        this.valorStr = valorStr;
     }
     
 
@@ -66,6 +72,33 @@ public class Recibo  implements java.io.Serializable {
         this.liquidacion = liquidacion;
     }
 
+
+    public String getValorStr() {
+		return valorStr;
+	}
+
+
+	public void setValorStr(String valorStr) {
+		this.valorStr = valorStr;
+	}
+
+
+	public int getMes() {
+        return this.mes;
+    }
+    
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAnio() {
+        return this.anio;
+    }
+    
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
     public int getNumeroRecibo() {
         return this.numeroRecibo;
     }
@@ -74,11 +107,11 @@ public class Recibo  implements java.io.Serializable {
         this.numeroRecibo = numeroRecibo;
     }
 
-    public float getValor() {
+    public int getValor() {
         return this.valor;
     }
     
-    public void setValor(float valor) {
+    public void setValor(int valor) {
         this.valor = valor;
     }
 

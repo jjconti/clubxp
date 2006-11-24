@@ -73,8 +73,6 @@ public class TestAdministradorDeFamilias extends TestCase {
 		assertTrue(titulares.indexOf(socio1) >= 0);
 		//El Socio 5 tiene que estar entre los titulares
 		assertTrue(titulares.indexOf(socio5) >= 0);
-		//El Socio 7 NO tiene que estar entre los titulares
-		assertFalse(titulares.indexOf(socio7) >= 0);
 		
 		List asociados = AdministradorDeFamilias.getAsociados(socio1.getIdSocio());
 		assertTrue(asociados.indexOf(socio2) >= 0);
@@ -96,6 +94,33 @@ public class TestAdministradorDeFamilias extends TestCase {
 
 	}
 	
+	public void testGetTitulares() throws ValidadorException{
+		Vector asociados1 = new Vector();
+		Vector asociados2 = new Vector();
+		
+		
+		asociados1.add(socio2.getIdSocioI());
+		asociados1.add(socio3.getIdSocioI());
+		asociados1.add(socio4.getIdSocioI());
+		
+		asociados2.add(socio6.getIdSocioI());
+		asociados2.add(socio7.getIdSocioI());
+
+		AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados1);
+		AdministradorDeFamilias.CrearFamilia(socio5.getIdSocio(), asociados2);
+		
+		List titulares = AdministradorDeFamilias.getTitulares();
+		//El Socio 1 tiene que estar entre los titulares
+		assertTrue(titulares.indexOf(socio1) >= 0);
+		//El Socio 5 tiene que estar entre los titulares
+		assertTrue(titulares.indexOf(socio5) >= 0);
+		//El Socio 7 NO tiene que estar entre los titulares
+		assertFalse(titulares.indexOf(socio7) >= 0);
+		//No tiene que haber nulls
+		assertFalse(titulares.indexOf(null) >= 0);
+		
+	
+	}
 	
 	public void testCrearFamiliaTitularMenor(){
 		Vector asociados1 = new Vector();
@@ -104,13 +129,12 @@ public class TestAdministradorDeFamilias extends TestCase {
 		asociados1.add(socio4.getIdSocioI());
 		
 		try{
-			AdministradorDeFamilias.CrearFamilia(socio2.getIdSocio(), asociados1);	
+			AdministradorDeFamilias.CrearFamilia(socio2.getIdSocio(), asociados1);
 		} catch(ValidadorException e){
-			assertTrue(true);
 			return;
 		}
 		
-		assertTrue(false);
+		fail();
 		
 	}
 	
@@ -139,6 +163,7 @@ public class TestAdministradorDeFamilias extends TestCase {
 		//El titular no debe estar mas en la lista de titulares
 		List titulares = AdministradorDeFamilias.getTitulares();
 		assertFalse(titulares.contains(socio1));
+		assertFalse(socio1.isAsociado());
 		assertFalse(socio2.isAsociado());
 		assertFalse(socio3.isAsociado());
 		assertFalse(socio4.isAsociado());

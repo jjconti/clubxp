@@ -24,7 +24,6 @@ public class Socio  implements java.io.Serializable {
      private long dni;
      private Date fechaNacimiento;
      private int edadAfiliacion;
-     private boolean asociado;
      private String tipoDocumento;
      private Set socios = new HashSet(0);
      private Set recibos = new HashSet(0);
@@ -38,7 +37,7 @@ public class Socio  implements java.io.Serializable {
 
 	/** minimal constructor */
     public Socio(int idSocio, Zona zona, Categoria categoria, String nombre, String apellido,
-    			 long dni, Date fechaNacimiento, int edadAfiliacion, boolean asociado, String tipoDocumento) {
+    			 long dni, Date fechaNacimiento, int edadAfiliacion, String tipoDocumento) {
         this.idSocio = idSocio;
         this.zona = zona;
         this.categoria = categoria;
@@ -47,13 +46,12 @@ public class Socio  implements java.io.Serializable {
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
         this.edadAfiliacion = edadAfiliacion;
-        this.asociado = asociado;
         this.tipoDocumento = tipoDocumento;
     }
     
     /** full constructor */
     public Socio(int idSocio, Socio socio, Zona zona, Categoria categoria, String nombre,
-    			 String apellido, long dni, Date fechaNacimiento, int edadAfiliacion, boolean asociado,
+    			 String apellido, long dni, Date fechaNacimiento, int edadAfiliacion, 
     			 String tipoDocumento, Set socios, Set recibos) {
         this.idSocio = idSocio;
         this.socio = socio;
@@ -64,7 +62,6 @@ public class Socio  implements java.io.Serializable {
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
         this.edadAfiliacion = edadAfiliacion;
-        this.asociado = asociado;
         this.tipoDocumento = tipoDocumento;
         this.socios = socios;
         this.recibos = recibos;
@@ -159,13 +156,6 @@ public class Socio  implements java.io.Serializable {
         this.edadAfiliacion = edadAfiliacion;
     }
 
-    public boolean isAsociado() {
-        return this.asociado;
-    }
-    
-    public void setAsociado(boolean asociado) {
-        this.asociado = asociado;
-    }
 
     public String getTipoDocumento() {
         return this.tipoDocumento;
@@ -194,6 +184,10 @@ public class Socio  implements java.io.Serializable {
     public boolean isTitular() {
     	return !this.getSocios().isEmpty();
     }
+
+	public boolean isAsociado() {
+		return (this.socio != null);
+	}
 
 
 

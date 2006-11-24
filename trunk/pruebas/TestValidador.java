@@ -159,7 +159,32 @@ public class TestValidador extends TestCase {
 	 * Test method for 'utils.Validador.isValidApellido(String)'
 	 */
 	public void testIsValidApellido() {
-
+		
+		assertTrue(Validador.isValidApellido("GoNzAlEz"));
+		assertTrue(Validador.isValidApellido("D'alessandro"));
+		assertTrue(Validador.isValidApellido("D' aless"));
+		assertTrue(Validador.isValidApellido("Pingüino"));
+		assertTrue(Validador.isValidApellido("De La Fuente"));
+		assertTrue(Validador.isValidApellido("Apellido comp"));
+		assertTrue(Validador.isValidApellido("Apell ido comp"));
+		assertTrue(Validador.isValidApellido(" axzzxdu "));
+		assertTrue(Validador.isValidApellido("Pérez"));
+		assertTrue(Validador.isValidApellido("Dós Acéntos"));
+		assertTrue(Validador.isValidApellido("Düe Pengüins"));		
+		assertTrue(Validador.isValidApellido("Nuñez"));
+		
+		assertFalse(Validador.isValidApellido("a"));
+		assertFalse(Validador.isValidApellido("Dos''App"));
+		assertFalse(Validador.isValidApellido("Dos'Ap'p"));
+		assertFalse(Validador.isValidApellido("Dos\"css"));
+		assertFalse(Validador.isValidApellido("coma,aa"));
+		assertFalse(Validador.isValidApellido("Pepe1"));
+		assertFalse(Validador.isValidApellido("1Pepe"));
+		assertFalse(Validador.isValidApellido("Pepe & Company"));
+		assertFalse(Validador.isValidApellido("páblító"));
+		assertFalse(Validador.isValidApellido("páblíto"));
+		assertFalse(Validador.isValidApellido("Láurá"));
+		assertFalse(Validador.isValidApellido("Güigüi"));
 	}
 
 	/*

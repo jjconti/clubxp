@@ -26,22 +26,22 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 	
 	public TestAdministradorDeLiquidaciones(String arg0) throws ValidadorException {
 		super(arg0);
+	}
+
+	protected void setUp() throws Exception {
+		super.setUp();
 		socios = new Socio[10];
 		
 		//Crea socios
 		socios[0] = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioA", "ApellidoA", "DNI", 33222333, DateUtil.getDate(25), 1);
 		socios[1] = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "SocioB", "ApellidoB", "DNI", 33222334, DateUtil.getDate(19), 2);
-		socios[2] = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "SocioC", "ApellidoC", "DNI", 33222335, DateUtil.getDate(21), 3);
+		socios[2] = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "SocioC", "ApellidoC", "DNI", 33222335, DateUtil.getDate(218), 3);
 		socios[3] = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioD", "ApellidoD", "DNI", 33222336, DateUtil.getDate(25), 4);
 		socios[4] = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioE", "ApellidoE", "DNI", 33222337, DateUtil.getDate(25), 4);
 		socios[5] = AdministradorDeSocios.CrearSocio(1, Categoria.MENOR, "SocioF", "ApellidoF", "DNI", 33222338, DateUtil.getDate(25), 4);
 		socios[6] = AdministradorDeSocios.CrearSocio(1, Categoria.VITALICIO, "SocioG", "ApellidoG", "DNI", 33222339, DateUtil.getDate(10), 4);
 		
 		//Socios que van a estar en un grupo familiar
-		/*socios[7] = AdministradorDeSocios.CrearSocio(1, Categoria.FAMILIAR, "JefeFamilia", "Familiota", "DNI", 33222444, DateUtil.getDate(30), 4);
-		socios[8] = AdministradorDeSocios.CrearSocio(1, Categoria.FAMILIAR, "familiar1", "Familiota", "DNI", 33222445, DateUtil.getDate(10), 4);
-		socios[9] = AdministradorDeSocios.CrearSocio(1, Categoria.FAMILIAR, "familiar2", "Familiota", "DNI", 33222446, DateUtil.getDate(10), 4);*/
-		
 		socios[7] = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "JefeFamilia", "Familiota", "DNI", 33222444, DateUtil.getDate(30), 4);
 		socios[8] = AdministradorDeSocios.CrearSocio(1, Categoria.MENOR, "familiar1", "Familiota", "DNI", 33222445, DateUtil.getDate(10), 4);
 		socios[9] = AdministradorDeSocios.CrearSocio(1, Categoria.MENOR, "familiar2", "Familiota", "DNI", 33222446, DateUtil.getDate(10), 4);
@@ -54,12 +54,9 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 
 	}
 
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		AdministradorDeSocios.eliminarSocios();
 	}
 
 	/*
@@ -68,7 +65,7 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 	public final void testSePuedeLiquidar() {
 		
 		//VERIFICAR QUE NO SE HAYA HECHO LA DEVOLUCIÓN DE LA LIQUIDACIÓN ANTERIOR
-			
+		
 		Calendar fecha = Calendar.getInstance();
 		
 		fecha.set(2005, 11, 10);
@@ -177,29 +174,28 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		
 	}
 
-	public void testGetReciboFor(){
+public void testGetReciboFor(){
 		
 		Liquidacion liq = new Liquidacion();
 		
-		Recibo r1 = new Recibo(0,socios[0],liq,1,20,false);
-		Recibo r2 = new Recibo(1,socios[1],liq,2,20,false);
-		Recibo r3 = new Recibo(2,socios[2],liq,3,20,false);
+		Recibo r1 = new Recibo(0,socios[0],liq,liq.getMes(),liq.getAnio(),1,20,false, "Veinte");
+		Recibo r2 = new Recibo(0,socios[1],liq,liq.getMes(),liq.getAnio(),2,20,false, "Veinte");
+		Recibo r3 = new Recibo(0,socios[2],liq,liq.getMes(),liq.getAnio(),3,20,false, "Veinte");
 		liq.getRecibos().add(r1);
 		liq.getRecibos().add(r2);
 		liq.getRecibos().add(r3);
 		
-		assertEquals(liq.getReciboFor(socios[0]), r1);
-		assertEquals(liq.getReciboFor(socios[0]), r2);
-		assertEquals(liq.getReciboFor(socios[0]), r3);
+		assertTrue(liq.getRecibosFor(socios[0]).contains(r1));
+		assertTrue(liq.getRecibosFor(socios[1]).contains(r2));
+		assertTrue(liq.getRecibosFor(socios[2]).contains(r3));
+		assertTrue(liq.getRecibosFor(socios[3]).isEmpty());
 	}
 	
 	/***
-	 * Prueba que se hagan recibos para los socios correctos.
+	 * Prueba que se hagan recibos para los socios correctos, considerando
+	 * que solo se adeuda la cuota del mes.
 	 */
-	public void testHacerLiquidacionCreaRecibos(){
-		
-		//EN ESTA PRUEBA SE CONSIDERA QUE NADIE DEBE MÁS DE 2 MESES CUANDO SE HACE LA LIQUIDACIÓN
-		
+	public void testHacerLiquidacionCreaRecibosNadieDebe(){
 		
 		//En la base de datos ya hay socios cargados
 		AdministradorDeLiquidaciones.HacerLiquidacion();
@@ -207,20 +203,22 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
 		
 		//Tiene que haber un recibo para los socios comunes
-		assertNotNull(ultimaLiq.getReciboFor(socios[0]));
-		assertNotNull(ultimaLiq.getReciboFor(socios[1]));
-		assertNotNull(ultimaLiq.getReciboFor(socios[2]));
-		assertNotNull(ultimaLiq.getReciboFor(socios[3]));
-		assertNotNull(ultimaLiq.getReciboFor(socios[4]));
-		assertNotNull(ultimaLiq.getReciboFor(socios[5]));
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[0]).size());
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[1]).size());
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[2]).size());
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[3]).size());
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[4]).size());
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[5]).size());
+		
 		//No tiene que haber recibo para los socios vitalicios
-		assertNull(ultimaLiq.getReciboFor(socios[6]));
+		assertTrue(ultimaLiq.getRecibosFor(socios[6]).isEmpty());
 		
 		//Tiene que haber un recibo para el titular del grupo familiar
-		assertNotNull(ultimaLiq.getReciboFor(socios[7]));
+		assertEquals(1, ultimaLiq.getRecibosFor(socios[7]).size());
+		
 		//No tiene que haber recibos para los integrantes del grupo familiar
-		assertNull(ultimaLiq.getReciboFor(socios[8]));
-		assertNull(ultimaLiq.getReciboFor(socios[9]));
+		assertTrue(ultimaLiq.getRecibosFor(socios[8]).isEmpty());
+		assertTrue(ultimaLiq.getRecibosFor(socios[9]).isEmpty());
 		
 		//En total, debe haber solo 7 recibos.. Ni mas ni menos!
 		assertEquals(ultimaLiq.getRecibos().size(), 7);
@@ -233,13 +231,13 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		AdministradorDeLiquidaciones.HacerLiquidacion();
 		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
 		
-		Recibo r = ultimaLiq.getReciboFor(socios[0]);
+		Recibo r = (Recibo) ultimaLiq.getRecibosFor(socios[0]).get(0);
 		assertTrue(r.getValor() == socios[0].getCategoria().getCuota());
 
-		r = ultimaLiq.getReciboFor(socios[1]);
+		r = (Recibo) ultimaLiq.getRecibosFor(socios[1]).get(0);
 		assertTrue(r.getValor() == socios[1].getCategoria().getCuota());
 
-		r = ultimaLiq.getReciboFor(socios[7]);
+		r = (Recibo) ultimaLiq.getRecibosFor(socios[7]).get(0);
 		assertTrue(r.getValor() == socios[7].getCategoria().getCuota());
 
 	}
@@ -256,8 +254,7 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		assertEquals(mesLiq, ultimaLiq.getMes());
 		assertEquals(anioLiq, ultimaLiq.getMes());
 		assertEquals(Calendar.getInstance().getTime(), ultimaLiq.getFecha()); //OJO, CAMBIAN LOS SEGUNDOS DEL DATE?
-		
-		//OTRA PRUEBA?
+
 		mesLiq = AdministradorDeLiquidaciones.getMesProximaLiq().intValue();
 		anioLiq = AdministradorDeLiquidaciones.getAnioProximaLiq().intValue();
 		
@@ -268,6 +265,7 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		//En la base de datos ya hay socios cargados
 		AdministradorDeLiquidaciones.HacerLiquidacion();
 		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
 		
 		Iterator i = ultimaLiq.getRecibos().iterator();
 		while(i.hasNext()){
@@ -280,7 +278,7 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 	}
 	
 	
-	/**
+	  /**
      * Assembles and returns a test suite for
      * all the test methods of this test case.
      * @return A non-null test suite.

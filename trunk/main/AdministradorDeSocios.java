@@ -28,16 +28,9 @@ public class AdministradorDeSocios {
 		
 		Zona zona = (Zona) s.get(Zona.class,new Integer(idZona)); 
 		Categoria cat = (Categoria) s.get(Categoria.class, new Integer(idCategoria));
-		boolean asociado;
-		
-		if (idCategoria == 1) {
-			asociado = true;  
-		} else {
-			asociado = false;
-		}
 		
 		Socio socio = new Socio(0,zona,cat,nombre.toUpperCase(),apellido.toUpperCase(),documento, fechaNacimiento, 
-								edadAfiliacion, asociado, tipoDocumento );
+								edadAfiliacion, tipoDocumento );
 		
 		s.save(socio);
 		s.getTransaction().commit();
@@ -57,13 +50,6 @@ public class AdministradorDeSocios {
 	
 		Zona zona = (Zona) s.get(Zona.class,new Integer(idZona)); 
 		Categoria cat = (Categoria) s.get(Categoria.class, new Integer(idCategoria));
-		boolean asociado;
-	
-		if (idCategoria == 1) {
-			asociado = true;  
-		} else {
-			asociado = false;
-		}
 		
 		socio.setZona(zona);
 		socio.setApellido(apellido.trim().toUpperCase());
@@ -73,7 +59,6 @@ public class AdministradorDeSocios {
 		socio.setEdadAfiliacion(edadAfiliacion);
 		socio.setTipoDocumento(tipoDocumento);
 		socio.setFechaNacimiento(fechaNacimiento);
-		socio.setAsociado(asociado);
 		
 		s.saveOrUpdate(socio);
 		s.getTransaction().commit();
@@ -105,32 +90,17 @@ public class AdministradorDeSocios {
 	 */
 	public static Socio ObtenerSocio(int idSocio) {
 		Session s = HibernateUtil.getSession();
-		s.beginTransaction();
-		
-		Socio socio;
-		try{
-			socio = (Socio) s.get(Socio.class, new Integer(idSocio));
-		}
-		catch (Exception e){
-			socio = null;
-		}
-		s.getTransaction().commit();
-		
-		return socio;
+	
+		return (Socio) s.get(Socio.class, new Integer(idSocio));
+			
 	}
 	
 	public static List getSocios(){
 		
 		Session s = HibernateUtil.getSession();
-		s.beginTransaction();
 		
 		Query q = s.createQuery("from Socio");
 		List l = q.list();
-		
-		s.getTransaction().commit();
-		//Desata todos los grupos de la base de datos
-		//Iterator i = l.iterator();
-		//while (i.hasNext())	s.evict(i.next());
 	
 		return l;
 
@@ -141,7 +111,7 @@ public class AdministradorDeSocios {
 		s.beginTransaction();
 		
 		//Primero eliminamos a los asociados
-		Query q = s.createQuery("delete from Socio s where s.asociado = true");
+		Query q = s.createQuery("delete from Socio s where s.socio != null");
 		q.executeUpdate();
 		
 		q = s.createQuery("delete from Socio");

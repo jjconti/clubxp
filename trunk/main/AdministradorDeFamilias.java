@@ -13,23 +13,23 @@ public class AdministradorDeFamilias {
 
 	static public List getTitulares() {
 		Session s = HibernateUtil.getSession();
-		s.beginTransaction();
+		//s.beginTransaction();
 		
-		Query q = s.createQuery("select distinct s.socio from Socio s where s.asociado = true");
+		Query q = s.createQuery("select distinct s.socio from Socio s");
 		List l = q.list();
 		
-		s.getTransaction().commit();
+		//s.getTransaction().commit();
 		return l;
 	}
 	
 	static public List getAsociados(int idTitular) {
 		Session s = HibernateUtil.getSession();
-		s.beginTransaction();
+		//s.beginTransaction();
 		
 		Query q = s.createQuery("from Socio s where s.socio.idSocio = " + idTitular);
 		List l = q.list();
 		
-		s.getTransaction().commit();
+		//s.getTransaction().commit();
 		return l;		
 	}
 	
@@ -45,7 +45,6 @@ public class AdministradorDeFamilias {
 			Socio asociado = AdministradorDeSocios.ObtenerSocio(((Integer)i.next()).intValue());
 			//auxiliar.addElement(asociado);
 			asociado.setSocio(titular);
-			asociado.setAsociado(true);
 			asociado.setCategoria(familiar);
 			titular.getSocios().add(asociado);
 		}
@@ -72,6 +71,7 @@ public class AdministradorDeFamilias {
 		Session s = HibernateUtil.getSession();
 		s.beginTransaction();
 		
+		//Todos los que no categoria familiar o vitalicio
 		Query q = s.createQuery("from Socio s where s.categoria != 1 AND s.categoria != 5");
 		List l = q.list();
 		
@@ -85,7 +85,6 @@ public class AdministradorDeFamilias {
 		Iterator i = titular.getSocios().iterator();
 		while (i.hasNext()){
 			Socio asociado = (Socio) i.next();
-			asociado.setAsociado(false);
 			asociado.setSocio(null);
 			asociado.setCategoria(AdministradorDeCategorias
 					.getCategoria(asociado.getFechaNacimiento()));
@@ -102,6 +101,18 @@ public class AdministradorDeFamilias {
 		s.update(titular);
 		s.getTransaction().commit();
 		
+	}
+	
+	public static void eliminarFamilias(){
+		Session s = HibernateUtil.getSession();
+		s.beginTransaction();
+		
+		//Primero eliminamos a los asociados
+		Query q = s.createQuery("update Socio s set s.asociado = false, s.socio = null");
+		q.executeUpdate();
+		
+		s.getTransaction().commit();
+
 	}
 	
 	

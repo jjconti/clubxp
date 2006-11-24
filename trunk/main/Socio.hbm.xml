@@ -32,9 +32,6 @@
         <property name="edadAfiliacion" type="int">
             <column name="edad_afiliacion" not-null="true" />
         </property>
-        <property name="asociado" type="boolean">
-            <column name="asociado" not-null="true" />
-        </property>
         <property name="tipoDocumento" type="string">
             <column name="tipo_documento" length="5" not-null="true" />
         </property>
