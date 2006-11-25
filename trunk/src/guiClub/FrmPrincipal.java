@@ -48,7 +48,7 @@ public class FrmPrincipal extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        setTitle("Sistema de Gestión del Club Americano");
+        setTitle("Sistema de Gestión del Club Americano Versión " + version);
         panelPrincipal.setLayout(new AbsoluteLayout());
 
         panelPrincipal.setPreferredSize(new Dimension(400, 150));
@@ -211,5 +211,6 @@ public class FrmPrincipal extends JFrame {
     private JPanel panelPrincipal;
     private Integer mesProximaLiquidacion;
 	private Integer anioProximaLiquidacion;
+	private String version = "0.1";
 
 }
