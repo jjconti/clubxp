@@ -76,32 +76,35 @@ public class AdministradorDeLiquidaciones {
 	}
 	
 	public static boolean sePuedeLiquidar(Date hoy) {
+		return true;
 		
-		Liquidacion ultimaLiq = getUltimaLiquidacion();
+	// Para que se pueda probar el sistema sin tener que cambiar la fecha
+	/*	Liquidacion ultimaLiq = getUltimaLiquidacion();
 		
-		int mesUltimaLiq = ultimaLiq.getMes() - 1;
-		int anioUltimaLiq = ultimaLiq.getAnio();
-		
-		int diaHoy = hoy.getDate();
-		int mesHoy = hoy.getMonth();
-		int anioHoy = hoy.getYear() + 1900;
-		
-		if (anioUltimaLiq == anioHoy){
+			int mesUltimaLiq = ultimaLiq.getMes() - 1;
+			int anioUltimaLiq = ultimaLiq.getAnio();
 			
-			if (mesUltimaLiq < mesHoy){
-				return true;
-			} else if (mesUltimaLiq == mesHoy){
-				if (diaHoy >= 20){
-					return true;
-				}
-			} 
-			return false;
+			int diaHoy = hoy.getDate();
+			int mesHoy = hoy.getMonth();
+			int anioHoy = hoy.getYear() + 1900;
 			
-		} else if (anioUltimaLiq < anioHoy){
+			if (anioUltimaLiq == anioHoy){
+				
+				if (mesUltimaLiq < mesHoy){
 					return true;
-		}else {
-			return false;
-		}
+				} else if (mesUltimaLiq == mesHoy){
+					if (diaHoy >= 20){
+						return true;
+					}
+				} 
+				return false;
+				
+			} else if (anioUltimaLiq < anioHoy){
+						return true;
+			}else {
+				return false;
+			}
+	*/
 	}
 		
 
@@ -192,7 +195,6 @@ public class AdministradorDeLiquidaciones {
 		session.getTransaction().commit();
 	
 	}
-
 
 	private static int getNumeroUltimoRecibo() {
 		Liquidacion ultima = getUltimaLiquidacion();
@@ -328,10 +330,19 @@ public class AdministradorDeLiquidaciones {
 		return reciboMin;
 		
 	}
-	
-	public static boolean esSocioNuevo(List recibos){
-		return recibos.isEmpty();	
+
+	public static boolean existenLiquidaciones() {
+		return !getRecibos().isEmpty();
 	}
+
+	public static List getRecibos(int idZona) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/*public static boolean esSocioNuevo(List recibos){
+		return recibos.isEmpty();	
+	}*/
 
 	
 

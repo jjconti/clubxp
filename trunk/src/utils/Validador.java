@@ -236,6 +236,17 @@ public class Validador {
 		return cuenta;
 		
 	}
+
+	public static void validNumeroRecibo(String numero) throws ValidadorException {
+		if (isInt(numero)){
+			if (new Integer(numero).intValue() <= 0){
+				throw new ValidadorException("El número del recibo debe ser un entero positivo.");
+			}	 
+		}else{
+			throw new ValidadorException("El número del recibo debe ser un entero positivo.");
+		}	
+		
+	}
 	
 	
 	

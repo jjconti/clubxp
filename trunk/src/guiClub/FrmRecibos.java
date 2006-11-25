@@ -75,13 +75,15 @@ public class FrmRecibos extends javax.swing.JDialog {
 			 Class.forName(dbdriver).newInstance();
 			 db = DriverManager.getConnection(conurl,dbuser,dbpass);
 			
-			 reporteRecibos = JasperCompileManager.compileReport("reciboTpMetodosAgiles.jrxml");
+			 // NO DESCOMENTAR al menos que se pierda el archivo compilado
+
+			 /*reporteRecibos = JasperCompileManager.compileReport("reciboTpMetodosAgiles.jrxml");
 			 FileOutputStream out = new FileOutputStream("recibos.jasper");
 			 ObjectOutputStream outs = new ObjectOutputStream(out);
 			 outs.writeObject(reporteRecibos);
 			 outs.close();
-			 out.close();
-			// NO DESCOMENTAR al menos que se pierda el archivo compilado
+			 out.close();*/
+			
 			 
 			reporteIntegrantes = JasperCompileManager.compileReport("integrantesGrupoFamiliar.jrxml");
 			params.put("SUBREPORT", reporteIntegrantes);

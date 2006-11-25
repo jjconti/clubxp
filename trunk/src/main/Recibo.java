@@ -122,13 +122,24 @@ public class Recibo  implements java.io.Serializable {
     public void setDevuelto(boolean devuelto) {
         this.devuelto = devuelto;
     }
-   
 
 
+	public Integer getNumeroReciboI() {
+		return new Integer(numeroRecibo);
+	}
 
 
+	public Integer getMesI() {
+		return new Integer(mes);
+	}
+	
+	public Integer getAnioI() {
+		return new Integer(anio);
+	}
 
 
-
+	public Float getValorF() {
+		return new Float(valor);
+	}
 
 }

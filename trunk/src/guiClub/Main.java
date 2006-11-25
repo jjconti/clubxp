@@ -41,7 +41,7 @@ public class Main {
          //FrmAltaSocio s2 = new FrmAltaSocio(); 
          //s2.setVisible(true);
         
-        new FrmPrincipal().show();
+        new FrmPrincipal().setVisible(true);
           
     }
     
