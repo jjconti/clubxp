@@ -8,6 +8,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -637,9 +640,7 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 				
 	}
 	
-	
 
-	
 	
 	  /**
      * Assembles and returns a test suite for

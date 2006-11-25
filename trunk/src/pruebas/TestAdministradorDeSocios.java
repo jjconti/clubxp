@@ -64,6 +64,32 @@ public class TestAdministradorDeSocios extends TestCase {
 		
 	}
 	
+	public void testCrearSocioDocumentoRepetido() throws ValidadorException{
+		Date fecha = new Date("9/12/1983");
+		AdministradorDeSocios.CrearSocio(1,Categoria.MAYOR,"Nombre","Apellido","DNI",31234345,fecha,10);
+		AdministradorDeSocios.CrearSocio(1,Categoria.MAYOR,"Nombre2","Apellido2","LC",2000000,fecha,10);
+
+		//No se debe poder crear un socio con el mismo DNI
+		try {
+			AdministradorDeSocios.CrearSocio(1,Categoria.MAYOR,"Nombre3","Apellido3","DNI",31234345,fecha,10);
+			fail();
+		} catch (ValidadorException e) {
+			
+		}
+		
+		//No se debe poder crear un socio con la misma LC
+		try {
+			AdministradorDeSocios.CrearSocio(1,Categoria.MAYOR,"Nombre4","Apellido4","LC",2000000,fecha,10);
+			fail();
+		} catch (ValidadorException e) {			
+		}
+		
+		//Se debe poder crear un socio con el mismo numero pero distinto tipo
+		AdministradorDeSocios.CrearSocio(1,Categoria.MAYOR,"Nombre4","Apellido4","DNI",2000000,fecha,10);
+		
+	}
+
+	
 	public void testEliminarSocio() throws ValidadorException {
 		
 		//Crea un socio
@@ -103,7 +129,7 @@ public class TestAdministradorDeSocios extends TestCase {
 		//Crea un socio titular de una familia
 		Date fechaNac = new Date("10/15/1980");
 		Socio socio1 = AdministradorDeSocios.CrearSocio(1,2,"Nombre","Apellido","DNI",33222333, fechaNac, 5);
-		Socio socio2 = AdministradorDeSocios.CrearSocio(1,2,"Nombre","Apellido","DNI",33222333, fechaNac, 5);
+		Socio socio2 = AdministradorDeSocios.CrearSocio(1,2,"Nombre","Apellido","DNI",33222334, fechaNac, 5);
 		Vector asociados = new Vector();
 		asociados.add(socio2.getIdSocioI());
 		AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados);
@@ -165,7 +191,7 @@ public class TestAdministradorDeSocios extends TestCase {
 		
 	}
 	
-	  /**
+	/**
      * Assembles and returns a test suite for
      * all the test methods of this test case.
      * @return A non-null test suite.

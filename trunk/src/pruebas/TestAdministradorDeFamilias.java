@@ -44,7 +44,7 @@ public class TestAdministradorDeFamilias extends TestCase {
 		socio5 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioE", "ApellidoE", "DNI", 33222337, fechaNac1, 4);
 		socio6 = AdministradorDeSocios.CrearSocio(1, Categoria.CADETE, "SocioF", "ApellidoF", "DNI", 33222338, fechaNac2, 4);
 		socio7 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioG", "ApellidoG", "DNI", 33222339, cumpleHoy, 4);		
-		socio8 = AdministradorDeSocios.CrearSocio(1, Categoria.VITALICIO, "Vitalicio", "ApellidoV", "DNI", 33222339, cumpleHoy, 4);
+		socio8 = AdministradorDeSocios.CrearSocio(1, Categoria.VITALICIO, "Vitalicio", "ApellidoV", "DNI", 33222340, cumpleHoy, 4);
 		
 	}
 

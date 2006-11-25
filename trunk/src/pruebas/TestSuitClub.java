@@ -22,7 +22,7 @@ public class TestSuitClub extends TestCase {
         suite.addTest(TestAdministradorDeFamilias.suite());
         suite.addTest(TestAdministradorDeCategorias.suite());
         suite.addTest(TestAdministradorDeLiquidaciones.suite());
-        
+        suite.addTest(TestControlDeRecibos.suite());
         return suite;
     }
 	
