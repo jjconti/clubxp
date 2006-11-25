@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import utils.HibernateUtil;
+import utils.ValidadorException;
 
 public class AdministradorDeLiquidaciones {
 	
@@ -335,14 +336,73 @@ public class AdministradorDeLiquidaciones {
 		return !getRecibos().isEmpty();
 	}
 
-	public static List getRecibos(int idZona) {
-		// TODO Auto-generated method stub
-		return null;
+	/* Control de recibos */
+	
+	/**
+	 * Establece como devuelto un recibo, perteneciente a la liquidación
+	 * actual. 
+	 * @param numeroRecibo El recibo que se va a setear devuelto
+	 * @param idZona Zona a la que pertenece el recibo. Se utiliza solo para
+	 * validar el mismo.
+	 */
+	public static void setDevuelto(int numeroRecibo, int idZona, boolean valor) throws ValidadorException{
+		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		Session s = HibernateUtil.getSession();
+		
+		Query q = s.createQuery("from Recibo r where r.numeroRecibo = " + numeroRecibo);
+		Recibo recibo = (Recibo) q.uniqueResult();
+		
+		if (recibo.getLiquidacion().getIdLiq() != ultimaLiq.getIdLiq())
+			throw new ValidadorException("El recibo no pertenece a la última liquidación.");
+		
+		if (recibo.getSocio().getZona().getIdZona() != idZona)
+			throw new ValidadorException("El recibo no pertenece a la zona seleccionada.");
+		
+		recibo.setDevuelto(valor);
+		
+		s.beginTransaction();
+		s.update(recibo);
+		s.getTransaction().commit();
+		
+	}
+	/**
+	 * 
+	 * @param idZona Id de la zona de la cual se quieren los recibos
+	 * @return Recibos de la ultima liquidacion, que pertenecen a idZona 
+	 */
+	public static List getRecibos(int idZona){
+		Session s = HibernateUtil.getSession();
+		
+		Liquidacion ultimaLiq = getUltimaLiquidacion();
+		
+		Query q = s.createQuery("from Recibo r where r.socio.zona.idZona = " + idZona +
+				" AND r.liquidacion.idLiq = " + ultimaLiq.getIdLiq());
+		List lista = q.list();
+		
+		return lista;
 	}
 	
-	/*public static boolean esSocioNuevo(List recibos){
-		return recibos.isEmpty();	
-	}*/
+	/**
+	 * 
+	 * @param idZona Id de la zona de la cual se quiere calcular el monto
+	 * @return La suma del valor de los recibos no devueltos
+	 */
+	public static float calcularMontoRecibosNoDevueltos(int idZona){
+		
+		Session s = HibernateUtil.getSession();
+		Liquidacion ultimaLiq = getUltimaLiquidacion();
+		
+		Query q = s.createQuery("select sum(r.valor) from Recibo r where r.socio.zona.idZona = " + idZona +
+				" AND r.liquidacion.idLiq = " + ultimaLiq.getIdLiq() + 
+				" AND r.devuelto = false");
+		
+		Object result = q.uniqueResult();
+		
+		
+		return ((Float) result).floatValue() ;
+	}
+	
 
 	
 
