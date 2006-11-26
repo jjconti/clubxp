@@ -233,7 +233,8 @@ public class FrmRendicion extends JDialog {
 			cargarDatos();
 			
     	} catch (ValidadorException e) {
-    		JOptionPane.showMessageDialog(this,e.getMensaje(),"Advertencia",JOptionPane.WARNING_MESSAGE);	
+    		JOptionPane.showMessageDialog(this,e.getMensaje(),"Advertencia",JOptionPane.WARNING_MESSAGE);
+    		numeroRecibo.requestFocus();
 		}
     }
  
