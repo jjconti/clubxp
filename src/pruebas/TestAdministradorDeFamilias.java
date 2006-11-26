@@ -32,6 +32,10 @@ public class TestAdministradorDeFamilias extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		//Borra todos los socios
+		AdministradorDeSocios.eliminarSocios();
+		
 		//Crea socios
 		Date fechaNac1 = new Date("11/20/1980"); //Mayor de edad
 		Date fechaNac2 = new Date("10/15/1990"); //Menor de edad
@@ -50,6 +54,8 @@ public class TestAdministradorDeFamilias extends TestCase {
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		
+		//Borra todos los socios
 		AdministradorDeSocios.eliminarSocios();
 	}
 	
