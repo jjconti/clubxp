@@ -28,6 +28,13 @@ public class AdministradorDeSocios {
 			throw new ValidadorException("No se pueden crear socios con categoría Familiar");
 		
 		Session s = HibernateUtil.getSession();
+		
+		Query q = s.createQuery("from Socio s where s.tipoDocumento = '" + tipoDocumento 
+				+ "' AND s.dni = " + documento);
+		
+		if (q.list().size() > 0)
+			throw new ValidadorException("Ya existe un socio con ese documento");	
+		
 		s.beginTransaction();
 		
 		Zona zona = (Zona) s.get(Zona.class,new Integer(idZona)); 
