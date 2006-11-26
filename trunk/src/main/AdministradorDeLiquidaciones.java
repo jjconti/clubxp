@@ -353,6 +353,9 @@ public class AdministradorDeLiquidaciones {
 		Query q = s.createQuery("from Recibo r where r.numeroRecibo = " + numeroRecibo);
 		Recibo recibo = (Recibo) q.uniqueResult();
 		
+		if (recibo == null)
+			throw new ValidadorException("No existe un recibo con ese número en la base de datos");
+		
 		if (recibo.getLiquidacion().getIdLiq() != ultimaLiq.getIdLiq())
 			throw new ValidadorException("El recibo no pertenece a la última liquidación.");
 		
@@ -371,13 +374,14 @@ public class AdministradorDeLiquidaciones {
 	 * @param idZona Id de la zona de la cual se quieren los recibos
 	 * @return Recibos de la ultima liquidacion, que pertenecen a idZona 
 	 */
-	public static List getRecibos(int idZona){
+	public static List getRecibosDevueltos(int idZona){
 		Session s = HibernateUtil.getSession();
 		
 		Liquidacion ultimaLiq = getUltimaLiquidacion();
 		
 		Query q = s.createQuery("from Recibo r where r.socio.zona.idZona = " + idZona +
-				" AND r.liquidacion.idLiq = " + ultimaLiq.getIdLiq());
+				" AND r.liquidacion.idLiq = " + ultimaLiq.getIdLiq() +
+				" AND r.devuelto = true" );
 		List lista = q.list();
 		
 		return lista;
@@ -399,7 +403,9 @@ public class AdministradorDeLiquidaciones {
 		
 		Object result = q.uniqueResult();
 		
-		
+		if (result == null){
+			result = new Float(0);
+		}
 		return ((Float) result).floatValue() ;
 	}
 	

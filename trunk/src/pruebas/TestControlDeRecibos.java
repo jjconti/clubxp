@@ -189,10 +189,10 @@ public class TestControlDeRecibos extends TestCase {
 	
 	/**
 	 * Comprueba que no se devuelvan recibos de liquidaciones anteriores,
-	 * ni de otras zonas
+	 * ni de otras zonas.
 	 * @throws ValidadorException 
 	 */
-	public void testGetRecibosPorZona() throws ValidadorException{
+	public void testGetRecibosDevueltosPorZona() throws ValidadorException{
 		
 		
 		//Crea algunos socios en zona 3
@@ -207,19 +207,31 @@ public class TestControlDeRecibos extends TestCase {
 		
 		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
 		
+		
+		//Pone como devueltos todos los de la zona 3, menos uno
+		Iterator i = ultimaLiq.getRecibos().iterator();
+		while (i.hasNext()){
+			Recibo r = (Recibo) i.next();
+			if (r.getSocio().getZona().getIdZona() == 3 && r.getSocio().getDni() != 43222333)
+				AdministradorDeLiquidaciones.setDevuelto(r.getNumeroRecibo(), r.getSocio().getZona().getIdZona(), true);
+		}
+		
+		
 		//Recibos para zona 3
-		List zona3 = AdministradorDeLiquidaciones.getRecibos(3);
+		List zona3 = AdministradorDeLiquidaciones.getRecibosDevueltos(3);
 		
 		//Tiene que haber solo 4 recibos
-		assertEquals(4, zona3.size());
+		assertEquals(3, zona3.size());
 		
-		Iterator i = zona3.iterator();
+		i = zona3.iterator();
 		while (i.hasNext()){
 			Recibo r = (Recibo) i.next();
 			//Tiene que ser de la zona 3
 			assertEquals(3, r.getSocio().getZona().getIdZona());
 			//Tiene que ser de esta liquidación
 			assertEquals(ultimaLiq.getIdLiq(), r.getLiquidacion().getIdLiq());
+			//Tiene que estar devuelto
+			assertTrue(r.isDevuelto());
 		}
 		
 	}
