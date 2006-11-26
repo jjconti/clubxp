@@ -18,15 +18,17 @@ import main.Socio;
 public class TestAdministradorDeSocios extends TestCase {
 
 	public TestAdministradorDeSocios(){
-		AdministradorDeSocios.eliminarSocios();
 	}
 	
 	protected void setUp() throws Exception {
 		super.setUp();
+		//Borra todos los socios
+		AdministradorDeSocios.eliminarSocios();
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		//Borra todos los socios
 		AdministradorDeSocios.eliminarSocios();
 	}
 	
@@ -141,6 +143,26 @@ public class TestAdministradorDeSocios extends TestCase {
 		} catch (Exception e) {		}
 		
 		AdministradorDeFamilias.EliminarFamilia(socio1.getIdSocio());
+		
+	}
+	
+	public void testEliminarAsosiado() throws ValidadorException {
+		
+		//Crea un socio miembro de un grupo familiar
+		Date fechaNac = new Date("10/15/1980");
+		Socio socio1 = AdministradorDeSocios.CrearSocio(1,2,"Titular","Apellido","DNI",33222333, fechaNac, 5);
+		Socio socio2 = AdministradorDeSocios.CrearSocio(1,2,"Asociado","Apellido","DNI",33222334, fechaNac, 5);
+		Vector asociados = new Vector();
+		asociados.add(socio2.getIdSocioI());
+		AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados);
+		
+		//Lo elimina
+		try {
+			AdministradorDeSocios.EliminarSocio(socio2.getIdSocio());
+			fail();
+		} catch (Exception e) {		}
+		
+		AdministradorDeFamilias.EliminarFamilia(socio2.getIdSocio());
 		
 	}
 	

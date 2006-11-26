@@ -61,7 +61,7 @@ public class TestControlDeRecibos extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		AdministradorDeSocios.eliminarSocios();
-		AdministradorDeLiquidaciones.eliminarLiquidaciones();
+		//AdministradorDeLiquidaciones.eliminarLiquidaciones();
 	}
 
 	

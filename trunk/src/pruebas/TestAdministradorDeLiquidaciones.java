@@ -37,8 +37,9 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		super.setUp();
 		socios = new Socio[10];
 		
-		//Elimina recibos y liquidaciones
-		AdministradorDeLiquidaciones.eliminarLiquidaciones();
+		//Elimina socios, recibos y liquidaciones
+		AdministradorDeSocios.eliminarSocios();
+		//AdministradorDeLiquidaciones.eliminarLiquidaciones();
 		
 		//Crea socios
 		socios[0] = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioA", "ApellidoA", "DNI", 33222333, DateUtil.getDate(25), 1);
@@ -65,7 +66,6 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		AdministradorDeSocios.eliminarSocios();
-		AdministradorDeLiquidaciones.eliminarLiquidaciones();
 	}
 
 	/*
