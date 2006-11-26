@@ -30,7 +30,7 @@ import main.Zona;
  */
 
 
-public class FrmRendicion extends javax.swing.JFrame {
+public class FrmRendicion extends JDialog {
     
     
 	/** Creates new form FrmRendicion */
@@ -64,6 +64,7 @@ public class FrmRendicion extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Rendici\u00f3n");
         setResizable(false);
+        setModal(true);
         panelPrincipal.setLayout(new AbsoluteLayout());
 
         panelPrincipal.setPreferredSize(new java.awt.Dimension(10, 35));
@@ -120,7 +121,6 @@ public class FrmRendicion extends javax.swing.JFrame {
 		tabla.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		tabla.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
 			public void valueChanged(ListSelectionEvent arg0) {
 				reciboSeleccionado();
 			}
@@ -166,7 +166,7 @@ public class FrmRendicion extends javax.swing.JFrame {
     	
     	Vector datos = new Vector();
         
-        List recibos = AdministradorDeLiquidaciones.getRecibos(((Zona)zona.getSelectedItem()).getIdZona());
+        List recibos = AdministradorDeLiquidaciones.getRecibosDevueltos(((Zona)zona.getSelectedItem()).getIdZona());
         Iterator i = recibos.iterator();
         while(i.hasNext()){
         	Recibo r = (Recibo) i.next();
@@ -191,7 +191,12 @@ public class FrmRendicion extends javax.swing.JFrame {
             }
         });
         
-        //pesos.setText(AdministradorDeLiquidaciones.calcularMontoRecibosNoDevueltos(((Zona)zona.getSelectedItem()).getIdZona()));
+        pesos.setText((new Float(AdministradorDeLiquidaciones.
+        		calcularMontoRecibosNoDevueltos(((Zona)zona.getSelectedItem()).getIdZona()))).toString());
+        
+        numeroRecibo.setText("");
+        numeroRecibo.requestFocus();
+    
 	}
 
 	private void cerrarActionPerformed(ActionEvent evt) {
@@ -200,19 +205,22 @@ public class FrmRendicion extends javax.swing.JFrame {
 
     private void zonaActionPerformed(ActionEvent evt) {
         cargarDatos();
+        zona.requestFocus();
     }
 
     private void devueltoActionPerformed(ActionEvent evt) {
         
     	try {
+    		numeroRecibo.setText(numeroRecibo.getText().trim());
 			Validador.validNumeroRecibo(numeroRecibo.getText());
 			
 			int n = new Integer(numeroRecibo.getText()).intValue();
-			//AdministradorDeLiquidaciones.setDevuelto(n, ((Zona) zona.getSelectedItem()).getIdZona(), true);
+			AdministradorDeLiquidaciones.setDevuelto(n, ((Zona) zona.getSelectedItem()).getIdZona(), true);
 			cargarDatos();
     	
     	} catch (ValidadorException e) {
     		JOptionPane.showMessageDialog(this,e.getMensaje(),"Advertencia",JOptionPane.WARNING_MESSAGE);	
+    		numeroRecibo.requestFocus();
 		}
     }
 
@@ -221,7 +229,7 @@ public class FrmRendicion extends javax.swing.JFrame {
 			Validador.validNumeroRecibo(numeroRecibo.getText());
 			
 			int n = new Integer(numeroRecibo.getText()).intValue();
-			//AdministradorDeLiquidaciones.setDevuelto(n, ((Zona) zona.getSelectedItem()).getIdZona(), false);
+			AdministradorDeLiquidaciones.setDevuelto(n, ((Zona) zona.getSelectedItem()).getIdZona(), false);
 			cargarDatos();
 			
     	} catch (ValidadorException e) {
