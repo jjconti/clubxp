@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Vector;
+
 import utils.DateUtil;
 import utils.ValidadorException;
 
@@ -32,9 +34,24 @@ public class CargadorDB {
 		AdministradorDeSocios.CrearSocio(3, Categoria.MAYOR, "Lucia", "Gomez", "DNI", 31445682, DateUtil.getDate(25), 1);
 		
 		//Socios en zona 4
-		AdministradorDeSocios.CrearSocio(4, Categoria.MAYOR, "Nicolás", "Gutierrez", "DNI", 33222383, DateUtil.getDate(25), 1);
+		AdministradorDeSocios.CrearSocio(4, Categoria.MAYOR, "Nicolás", "Gutierrez", "DNI", 31445683, DateUtil.getDate(25), 1);
 		
 		
+		//Socios que van a estar en grupos familiares
+		Socio socio1 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Pepe", "Argento", "DNI", 31445684, DateUtil.getDate(25), 1);
+		Socio socio2 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Mónica", "Argento", "DNI", 31445685, DateUtil.getDate(25), 1);
+		Socio socio3 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Coqui", "Argento", "DNI", 31445686, DateUtil.getDate(25), 1);
+		Socio socio4 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "NoSeComoSeLlamaLaRubia", "Argento", "DNI", 31445687, DateUtil.getDate(25), 1);
+		
+		//Crea el grupo familiar
+		Vector asociados = new Vector();
+		asociados.add(socio2.getIdSocioI());
+		asociados.add(socio3.getIdSocioI());
+		asociados.add(socio4.getIdSocioI());
+		AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados);	
+		
+		
+		System.out.println("Okey, todo cargado!");
 		
 	}
 
