@@ -131,7 +131,7 @@ public class FrmGestionSocios extends JDialog {
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {
 
     	int row = tablaGestionSocios.getSelectedRow();
-		if (row != -1){
+		if (row != -1 && tablaGestionSocios.getModel().getRowCount() != 0){
 			Integer idSocioElegido = (Integer)sociosModel.getValueAt(row,0);
     		int opcion = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el socio?","Confirmación de Eliminación",  JOptionPane.YES_NO_OPTION);
 			if(opcion == JOptionPane.OK_OPTION){

@@ -129,7 +129,7 @@ public class FrmGestionGrupos extends JDialog{
 
 			public void valueChanged(ListSelectionEvent arg0) {
 				int row = tablaGrupos.getSelectedRow();
-				if (row != -1){
+				if (row != -1 && tablaGrupos.getModel().getRowCount() != 0){
 
 					int titularSeleccionado = ((Integer)gruposModel.getValueAt(row,0)).intValue();
 					cargarIntegrantesGrupo(titularSeleccionado);
