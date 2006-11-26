@@ -25,7 +25,7 @@ public class AdministradorDeSocios {
 					 Date fechaNacimiento, int edadAfiliacion) throws ValidadorException {
 	
 		if (idCategoria == Categoria.FAMILIAR) 
-			throw new ValidadorException("No se pueden crear socios con categoría Familiar");
+			throw new ValidadorException("No se pueden crear socios con categoría Familiar.");
 		
 		Session s = HibernateUtil.getSession();
 		
@@ -33,7 +33,7 @@ public class AdministradorDeSocios {
 				+ "' AND s.dni = " + documento);
 		
 		if (q.list().size() > 0)
-			throw new ValidadorException("Ya existe un socio con ese documento");	
+			throw new ValidadorException("Ya existe un socio con ese documento.");	
 		
 		s.beginTransaction();
 		
