@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created using an evaluation version of JasperAssistant (http://www.jasperassistant.com) -->
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="recibosIntegrantes" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="30">
+	<property name="com.jasperassistant.designer.Grid" value="false"/>
+	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
+	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
+	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
+	<property name="com.jasperassistant.designer.DataSource" value="reciboTpMetodosAgiles"/>
+	<parameter name="id_socio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(165)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select s.id_socio, aso.apellido, aso.nombre
+from socio s, socio aso
+where s.id_socio = aso.id_titular and s.id_socio = $P{id_socio}]]>
+	</queryString>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="id_socio" class="java.lang.Integer"/>
+	<field name="nombre" class="java.lang.String"/>
+	<title>
+		<band height="20">
+			<staticText>
+				<reportElement x="18" y="0" width="160" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Integrantes del Grupo Familiar: ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="18" width="552" height="2"/>
+				<graphicElement/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="552" height="2"/>
+				<graphicElement/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="10" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="0" width="80" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="91" y="0" width="15" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="18" width="552" height="2"/>
+				<graphicElement/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
