@@ -14,8 +14,6 @@ import utils.ValidadorException;
 
 public class AdministradorDeLiquidaciones {
 	
-	public static boolean existenLiquidaciones = false;
-	
 	
 	//Este método es utilizado en las pruebas
 	public static Liquidacion setUltimaLiquidacion(int mes, int anio){
