@@ -155,7 +155,7 @@ public class FrmRendicion extends JDialog {
 
     protected void reciboSeleccionado() {
     	int row = tabla.getSelectedRow();
-		if (row != -1){
+		if (row != -1 && tabla.getModel().getRowCount() != 0){
 			Integer reciboSeleccionado = (Integer)tabla.getModel().getValueAt(row,0);
 			numeroRecibo.setText(reciboSeleccionado.toString());
 		}
