@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/11/2006 17:05:00 by Hibernate Tools 3.1.0.beta4 -->
+<hibernate-mapping>
+    <class name="main.Cobrador" table="cobrador" catalog="dbclub">
+        <id name="idCobrador" type="int">
+            <column name="id_cobrador" />
+            <generator class="native" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" length="45" not-null="true" />
+        </property>
+        <property name="dni" type="long">
+            <column name="dni" not-null="true" />
+        </property>
+        <set name="zonas" inverse="true">
+            <key>
+                <column name="id_cobrador" not-null="true" />
+            </key>
+            <one-to-many class="main.Zona" />
+        </set>
+    </class>
+</hibernate-mapping>
