@@ -75,10 +75,9 @@ public class AdministradorDeLiquidaciones {
 	}
 	
 	public static boolean sePuedeLiquidar(Date hoy) {
-		return true;
 		
 	// Para que se pueda probar el sistema sin tener que cambiar la fecha
-	/*	Liquidacion ultimaLiq = getUltimaLiquidacion();
+		Liquidacion ultimaLiq = getUltimaLiquidacion();
 		
 			int mesUltimaLiq = ultimaLiq.getMes() - 1;
 			int anioUltimaLiq = ultimaLiq.getAnio();
@@ -103,7 +102,7 @@ public class AdministradorDeLiquidaciones {
 			}else {
 				return false;
 			}
-	*/
+	
 	}
 		
 
@@ -162,7 +161,8 @@ public class AdministradorDeLiquidaciones {
 			if (debe <= 1){
 				//Crea el recibo para el mes actual.
 				Recibo rActual = new Recibo(0,socio, liquidacion, mesActual, anioActual, nroRecibo,
-						socio.getCategoria().getCuota(), false, socio.getCategoria().getCuotaStr());
+						socio.getCategoria().getCuota(), false, socio.getCategoria().getCuotaStr(), 
+						socio.getCategoria());
 				
 				nroRecibo++;
 				liquidacion.getRecibos().add(rActual);
@@ -177,7 +177,8 @@ public class AdministradorDeLiquidaciones {
 				
 				//Crea el recibo para el mes anterior.
 				Recibo rAnterior = new Recibo(0,socio, liquidacion, mes, anio, nroRecibo,
-						socio.getCategoria().getCuota(), false, socio.getCategoria().getCuotaStr());
+						socio.getCategoria().getCuota(), false, socio.getCategoria().getCuotaStr(),
+						socio.getCategoria());
 				
 				nroRecibo++;
 				liquidacion.getRecibos().add(rAnterior);

@@ -187,9 +187,9 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		
 		Liquidacion liq = new Liquidacion();
 		
-		Recibo r1 = new Recibo(0,socios[0],liq,liq.getMes(),liq.getAnio(),1,20,false, "Veinte");
-		Recibo r2 = new Recibo(0,socios[1],liq,liq.getMes(),liq.getAnio(),2,20,false, "Veinte");
-		Recibo r3 = new Recibo(0,socios[2],liq,liq.getMes(),liq.getAnio(),3,20,false, "Veinte");
+		Recibo r1 = new Recibo(0,socios[0],liq,liq.getMes(),liq.getAnio(),1,20,false, "Veinte", socios[0].getCategoria());
+		Recibo r2 = new Recibo(0,socios[1],liq,liq.getMes(),liq.getAnio(),2,20,false, "Veinte", socios[1].getCategoria());
+		Recibo r3 = new Recibo(0,socios[2],liq,liq.getMes(),liq.getAnio(),3,20,false, "Veinte", socios[2].getCategoria());
 		liq.getRecibos().add(r1);
 		liq.getRecibos().add(r2);
 		liq.getRecibos().add(r3);
@@ -216,20 +216,37 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		assertTrue(r.getValor() == socios[7].getCategoria().getCuota());
 	
 	}
+	
+	public void testHacerLiquidacionCategoriaCorrecta(){
+		
+		//En la base de datos ya hay socios cargados
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		Recibo r = (Recibo) ultimaLiq.getRecibosFor(socios[0]).get(0);
+		assertTrue(r.getCategoria() == socios[0].getCategoria());
+	
+		r = (Recibo) ultimaLiq.getRecibosFor(socios[1]).get(0);
+		assertTrue(r.getCategoria() == socios[1].getCategoria());
+	
+		r = (Recibo) ultimaLiq.getRecibosFor(socios[7]).get(0);
+		assertTrue(r.getCategoria() == socios[7].getCategoria());
+	
+	}
 
 	
 	public void testMesesQueDebe(){
 		
-		Recibo r1 = new Recibo(0,socios[0],null,10,2002,1,20,false, "Veinte");
-		Recibo r2 = new Recibo(0,socios[0],null,11,2002,2,20,false, "Veinte");
-		Recibo r3 = new Recibo(0,socios[0],null,12,2002,3,20,false, "Veinte");
-		Recibo r4 = new Recibo(0,socios[0],null,1,2003,4,20,false, "Veinte");
-		Recibo r5 = new Recibo(0,socios[0],null,2,2003,5,20,true, "Veinte");
-		Recibo r5b = new Recibo(0,socios[0],null,2,2003,6,20,false, "Veinte");
+		Recibo r1 = new Recibo(0,socios[0],null,10,2002,1,20,false, "Veinte", socios[0].getCategoria());
+		Recibo r2 = new Recibo(0,socios[0],null,11,2002,2,20,false, "Veinte", socios[0].getCategoria());
+		Recibo r3 = new Recibo(0,socios[0],null,12,2002,3,20,false, "Veinte", socios[0].getCategoria());
+		Recibo r4 = new Recibo(0,socios[0],null,1,2003,4,20,false, "Veinte", socios[0].getCategoria());
+		Recibo r5 = new Recibo(0,socios[0],null,2,2003,5,20,true, "Veinte", socios[0].getCategoria());
+		Recibo r5b = new Recibo(0,socios[0],null,2,2003,6,20,false, "Veinte", socios[0].getCategoria());
 
-		Recibo r6 = new Recibo(0,socios[0],null,10,2003,7,20,true, "Veinte");
-		Recibo r7 = new Recibo(0,socios[0],null,11,2003,8,20,true, "Veinte");
-		Recibo r8 = new Recibo(0,socios[0],null,12,2003,9,20,true, "Veinte");
+		Recibo r6 = new Recibo(0,socios[0],null,10,2003,7,20,true, "Veinte", socios[0].getCategoria());
+		Recibo r7 = new Recibo(0,socios[0],null,11,2003,8,20,true, "Veinte", socios[0].getCategoria());
+		Recibo r8 = new Recibo(0,socios[0],null,12,2003,9,20,true, "Veinte", socios[0].getCategoria());
 		
 		Vector recibos = new Vector();
 		recibos.add(r1);
@@ -301,6 +318,7 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 			Recibo r = (Recibo) i.next();
 			assertFalse(r.isDevuelto());
 			assertEquals(r.getLiquidacion(), ultimaLiq);
+			assertNotNull(r.getCategoria());
 		}
 				
 	}
@@ -605,9 +623,9 @@ public class TestAdministradorDeLiquidaciones extends TestCase {
 		
 		//Al socio0 no se le generaron recibos.
 		//Ahora el socio0 pagó en la caja todo lo que debia.
-		Recibo r1 = new Recibo(0, socios[0], null, liquidacion1.getMes(), liquidacion1.getAnio(),997 , 20, false, "veinte");
-		Recibo r2 = new Recibo(0, socios[0], null, liquidacion2.getMes(), liquidacion2.getAnio(),998 , 20, false, "veinte");
-		Recibo r3 = new Recibo(0, socios[0], null, liquidacion3.getMes(), liquidacion3.getAnio(),999 , 20, false, "veinte");
+		Recibo r1 = new Recibo(0, socios[0], null, liquidacion1.getMes(), liquidacion1.getAnio(),997 , 20, false, "veinte", socios[0].getCategoria());
+		Recibo r2 = new Recibo(0, socios[0], null, liquidacion2.getMes(), liquidacion2.getAnio(),998 , 20, false, "veinte", socios[0].getCategoria());
+		Recibo r3 = new Recibo(0, socios[0], null, liquidacion3.getMes(), liquidacion3.getAnio(),999 , 20, false, "veinte", socios[0].getCategoria());
 		
 		AdministradorDeLiquidaciones.guardarRecibo(r1);
 		AdministradorDeLiquidaciones.guardarRecibo(r2);

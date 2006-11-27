@@ -22,7 +22,8 @@ public class Recibo  implements java.io.Serializable {
      private float valor;
      private boolean devuelto;
      private String valorStr;
-
+     private Categoria categoria;
+     
 
     // Constructors
 
@@ -32,7 +33,7 @@ public class Recibo  implements java.io.Serializable {
 
     
     /** full constructor */
-    public Recibo(int idRecibo, Socio socio, Liquidacion liquidacion, int mes, int anio, int numeroRecibo, float valor, boolean devuelto, String valorStr) {
+    public Recibo(int idRecibo, Socio socio, Liquidacion liquidacion, int mes, int anio, int numeroRecibo, float valor, boolean devuelto, String valorStr, Categoria categoria) {
         this.idRecibo = idRecibo;
         this.socio = socio;
         this.liquidacion = liquidacion;
@@ -42,6 +43,7 @@ public class Recibo  implements java.io.Serializable {
         this.valor = valor;
         this.devuelto = devuelto;
         this.valorStr = valorStr;
+        this.categoria = categoria;
     }
     
 
@@ -140,6 +142,16 @@ public class Recibo  implements java.io.Serializable {
 
 	public Float getValorF() {
 		return new Float(valor);
+	}
+
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 }

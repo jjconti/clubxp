@@ -82,8 +82,8 @@ public class FrmRecibos extends javax.swing.JDialog {
 			 ObjectOutputStream outs = new ObjectOutputStream(out);
 			 outs.writeObject(reporteRecibos);
 			 outs.close();
-			 out.close();*/
-			
+			 out.close();
+			*/
 			 
 			reporteIntegrantes = JasperCompileManager.compileReport("integrantesGrupoFamiliar.jrxml");
 			params.put("SUBREPORT", reporteIntegrantes);
