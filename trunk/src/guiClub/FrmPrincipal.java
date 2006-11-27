@@ -54,7 +54,7 @@ public class FrmPrincipal extends JFrame {
         panelPrincipal.setPreferredSize(new Dimension(400, 150));
         panelLiquidacion.setLayout(new AbsoluteLayout());
 
-        panelLiquidacion.setBorder(new TitledBorder("Liquidaci\u00f3n"));
+        panelLiquidacion.setBorder(new TitledBorder("Liquidación"));
         botonLiquidar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 botonLiquidarActionPerformed(evt);
