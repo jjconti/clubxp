@@ -7,14 +7,15 @@
 	<property name="com.jasperassistant.designer.SnapToGrid" value="false"/>
 	<property name="com.jasperassistant.designer.GridWidth" value="12"/>
 	<property name="com.jasperassistant.designer.GridHeight" value="12"/>
-	<property name="com.jasperassistant.designer.DataSource" value="reciboTpMetodosAgiles"/>
+	<property name="com.jasperassistant.designer.DataSource" value="Recibos de dbClub"/>
 	<parameter name="id_socio" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(165)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[Select s.id_socio, aso.apellido, aso.nombre
 from socio s, socio aso
-where s.id_socio = aso.id_titular and s.id_socio = $P{id_socio}]]>
+where s.id_socio = aso.id_titular and s.id_socio = $P{id_socio}
+limit 0,9]]>
 	</queryString>
 	<field name="apellido" class="java.lang.String"/>
 	<field name="id_socio" class="java.lang.Integer"/>
@@ -22,7 +23,7 @@ where s.id_socio = aso.id_titular and s.id_socio = $P{id_socio}]]>
 	<title>
 		<band height="20">
 			<staticText>
-				<reportElement x="18" y="0" width="160" height="20"/>
+				<reportElement x="18" y="0" width="214" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
@@ -41,30 +42,29 @@ where s.id_socio = aso.id_titular and s.id_socio = $P{id_socio}]]>
 	<detail>
 		<band height="20">
 			<textField>
-				<reportElement x="10" y="0" width="80" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<reportElement x="20" y="-1" width="528" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellido}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellido} + ", " + $F{nombre}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="108" y="0" width="80" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="91" y="0" width="15" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
-				</textElement>
-				<text><![CDATA[,]]></text>
-			</staticText>
 			<line>
 				<reportElement x="0" y="18" width="552" height="2"/>
 				<graphicElement/>
 			</line>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="18">
+			<staticText>
+				<reportElement x="20" y="0" width="368" height="18">
+					<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT}.longValue() == 9)]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[y otros.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
 </jasperReport>

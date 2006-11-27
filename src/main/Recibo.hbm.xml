@@ -32,5 +32,10 @@
         <property name="devuelto" type="boolean">
             <column name="devuelto" not-null="true" />
         </property>
+        <many-to-one name="categoria" class="main.Categoria" fetch="select">
+            <column name="id_categoria" not-null="true" />
+        </many-to-one>
+        
+        
     </class>
 </hibernate-mapping>

@@ -33,15 +33,21 @@ public class CargadorDB {
 		AdministradorDeSocios.CrearSocio(3, Categoria.MAYOR, "Gimena", "Dominguez", "DNI", 31445681, DateUtil.getDate(25), 1);
 		AdministradorDeSocios.CrearSocio(3, Categoria.MAYOR, "Lucia", "Gomez", "DNI", 31445682, DateUtil.getDate(25), 1);
 		
+		AdministradorDeSocios.CrearSocio(3, Categoria.MENOR, "Lautarito", "Santucci", "DNI", 35445679, DateUtil.getDate(5), 1);
+		AdministradorDeSocios.CrearSocio(3, Categoria.MENOR, "Pablito", "Kreig", "DNI", 35445680, DateUtil.getDate(6), 1);
+		AdministradorDeSocios.CrearSocio(3, Categoria.MENOR, "Juancito", "Dominguez", "DNI", 35445681, DateUtil.getDate(7), 1);
+		AdministradorDeSocios.CrearSocio(3, Categoria.MENOR, "Marianito", "Gomez", "DNI", 35445682, DateUtil.getDate(8), 1);
+		
 		//Socios en zona 4
 		AdministradorDeSocios.CrearSocio(4, Categoria.MAYOR, "Nicolás", "Gutierrez", "DNI", 31445683, DateUtil.getDate(25), 1);
-		
+		AdministradorDeSocios.CrearSocio(4, Categoria.MENOR, "Brian", "Gutierrez", "DNI", 35445685, DateUtil.getDate(6), 1);
+		AdministradorDeSocios.CrearSocio(4, Categoria.MENOR, "Brunito", "Lürig", "DNI", 35445688, DateUtil.getDate(5), 1);
 		
 		//Socios que van a estar en grupos familiares
 		Socio socio1 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Pepe", "Argento", "DNI", 31445684, DateUtil.getDate(25), 1);
 		Socio socio2 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Mónica", "Argento", "DNI", 31445685, DateUtil.getDate(25), 1);
-		Socio socio3 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Coqui", "Argento", "DNI", 31445686, DateUtil.getDate(25), 1);
-		Socio socio4 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Paola", "Argento", "DNI", 31445687, DateUtil.getDate(25), 1);
+		Socio socio3 = AdministradorDeSocios.CrearSocio(1, Categoria.MENOR, "Coqui", "Argento", "DNI", 31445686, DateUtil.getDate(17), 1);
+		Socio socio4 = AdministradorDeSocios.CrearSocio(1, Categoria.MENOR, "Paola", "Argento", "DNI", 31445687, DateUtil.getDate(18), 1);
 		
 		//Crea el grupo familiar
 		Vector asociados = new Vector();

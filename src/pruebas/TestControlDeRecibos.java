@@ -276,9 +276,9 @@ public class TestControlDeRecibos extends TestCase {
 		
 		Liquidacion liq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
 		
-		Recibo r1 = new Recibo(0,socio1,liq,liq.getMes(),liq.getAnio(),1,25,false, "Veinticinco");
-		Recibo r2 = new Recibo(0,socio2,liq,liq.getMes(),liq.getAnio(),2,20,true, "Veinte");
-		Recibo r3 = new Recibo(0,socio3,liq,liq.getMes(),liq.getAnio(),2,30,true, "Treinta");
+		Recibo r1 = new Recibo(0,socio1,liq,liq.getMes(),liq.getAnio(),1,25,false, "Veinticinco", socio1.getCategoria());
+		Recibo r2 = new Recibo(0,socio2,liq,liq.getMes(),liq.getAnio(),2,20,true, "Veinte", socio2.getCategoria());
+		Recibo r3 = new Recibo(0,socio3,liq,liq.getMes(),liq.getAnio(),2,30,true, "Treinta", socio3.getCategoria());
 		liq.getRecibos().add(r1);
 		liq.getRecibos().add(r2);
 		liq.getRecibos().add(r3);
