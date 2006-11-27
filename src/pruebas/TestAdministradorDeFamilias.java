@@ -7,8 +7,11 @@ import utils.ValidadorException;
 
 
 import main.AdministradorDeFamilias;
+import main.AdministradorDeLiquidaciones;
 import main.AdministradorDeSocios;
 import main.Categoria;
+import main.Liquidacion;
+import main.Recibo;
 import main.Socio;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -237,6 +240,82 @@ public class TestAdministradorDeFamilias extends TestCase {
 		assertTrue(l.contains(socio6));
 		assertTrue(l.contains(socio7));
 		
+	}
+	
+
+	/**
+	 * La diferencia con testCrearFamilia, es que en este caso, hay recibos cargados en la 
+	 * base de datos
+	 *
+	 */
+	public void testCrearFamiliaNadieDebe(){
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		
+		Vector asociados1 = new Vector();
+		
+		asociados1.add(socio2.getIdSocioI());
+		asociados1.add(socio3.getIdSocioI());
+		asociados1.add(socio4.getIdSocioI());
+
+		try{
+			AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados1);
+		} catch(ValidadorException e){
+			fail();
+		}
+		
+		return;
+		
+	}
+
+	
+	public void testCrearFamiliaTitularDebeUnaCuota() throws ValidadorException{
+		Vector asociados1 = new Vector();
+		
+		asociados1.add(socio2.getIdSocioI());
+		asociados1.add(socio3.getIdSocioI());
+		asociados1.add(socio4.getIdSocioI());
+		
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		//Pone como devuelto un recibo del socio 1 (titular)
+		List recibos1 = ultimaLiq.getRecibosFor(socio1);
+		Recibo recibo = (Recibo) recibos1.get(0);
+		AdministradorDeLiquidaciones.setDevuelto(recibo.getNumeroRecibo(), 
+				recibo.getSocio().getZona().getIdZona(), true);
+		
+		try{
+			AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados1);
+			fail();
+		} catch(ValidadorException e){
+		}
+		
+		return;
+	}
+	
+	public void testCrearFamiliaAsociadoDebeUnaCuota() throws ValidadorException{
+		Vector asociados1 = new Vector();
+		
+		asociados1.add(socio2.getIdSocioI());
+		asociados1.add(socio3.getIdSocioI());
+		asociados1.add(socio4.getIdSocioI());
+		
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion ultimaLiq = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		//Pone como devuelto un recibo del socio 2 (asociado)
+		List recibos2 = ultimaLiq.getRecibosFor(socio2);
+		Recibo recibo = (Recibo) recibos2.get(0);
+		AdministradorDeLiquidaciones.setDevuelto(recibo.getNumeroRecibo(), 
+				recibo.getSocio().getZona().getIdZona(), true);
+		
+		try{
+			AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados1);
+			fail();
+		} catch(ValidadorException e){
+		}
+		
+		return;
 	}
 	
 	
