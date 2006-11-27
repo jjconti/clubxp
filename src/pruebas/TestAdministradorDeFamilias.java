@@ -318,7 +318,26 @@ public class TestAdministradorDeFamilias extends TestCase {
 		return;
 	}
 	
-	
+	// Prueba que no se puedan crear familias con mas de dos mayores
+	public void testCrearFamiliaMasDe2Mayores(){
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		
+		Vector asociados1 = new Vector();
+		
+		asociados1.add(socio2.getIdSocioI());
+		asociados1.add(socio3.getIdSocioI());
+		asociados1.add(socio4.getIdSocioI());
+		asociados1.add(socio5.getIdSocioI());
+
+		try{
+			AdministradorDeFamilias.CrearFamilia(socio1.getIdSocio(), asociados1);
+			fail();
+		} catch(ValidadorException e){
+		}
+		
+		return;
+		
+	}
 	/**
      * Assembles and returns a test suite for
      * all the test methods of this test case.

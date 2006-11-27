@@ -37,17 +37,26 @@ public class AdministradorDeFamilias {
 		Socio titular = AdministradorDeSocios.ObtenerSocio(idTitular);
 		Categoria familiar = AdministradorDeCategorias.getCategoriaFamiliar();
 		
-		if (!isValidTitular(titular)) 
+		if (!esMayorDeEdad(titular)) 
 			throw new ValidadorException("El titular debe ser mayor de edad.");
 		
-		//Comprueba que los asociados no tengan deudas
+		//Comprueba que los asociados no tengan deudas, y que haya como mucho un asociado mayor de edad
 		Iterator i = asociados.iterator();
+		int mayores = 0;
 		while(i.hasNext()){
 			Integer idSocio = (Integer)i.next();
 			int deuda = AdministradorDeLiquidaciones.mesesQueDebe(idSocio.intValue());
 			if (deuda > 0 )
 				throw new ValidadorException("El socio número " + idSocio + " adeuda " 
-						+ deuda + ((deuda == 1) ? "mes." : " meses."));
+						+ deuda + ((deuda == 1) ? " mes." : " meses."));
+			
+			Socio asociado = AdministradorDeSocios.ObtenerSocio(idSocio.intValue());
+			if (esMayorDeEdad(asociado))
+				mayores++;
+			
+			if (mayores > 1)
+				throw new ValidadorException("Solo puede haber 2 socios mayores de edad en un " +
+						"grupo familiar.");
 			
 		}
 		
@@ -77,7 +86,7 @@ public class AdministradorDeFamilias {
 	}
 
 	
-	static public boolean isValidTitular(Socio titular) {
+	static public boolean esMayorDeEdad(Socio titular) {
 		
 		Date now = DateUtil.getDate(21);
 		
