@@ -40,7 +40,17 @@ public class AdministradorDeFamilias {
 		if (!isValidTitular(titular)) 
 			throw new ValidadorException("El titular debe ser mayor de edad.");
 		
+		//Comprueba que los asociados no tengan deudas
 		Iterator i = asociados.iterator();
+		while(i.hasNext()){
+			Integer idSocio = (Integer)i.next();
+			int deuda = deuda = AdministradorDeLiquidaciones.mesesQueDebe(idSocio.intValue());
+			if (deuda > 0 )
+				throw new ValidadorException("El socio numero " + idSocio + " adeuda " + deuda + " meses." );
+			
+		}
+		
+		i = asociados.iterator();
 		while(i.hasNext()){
 			Socio asociado = AdministradorDeSocios.ObtenerSocio(((Integer)i.next()).intValue());
 			//auxiliar.addElement(asociado);

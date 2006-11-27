@@ -3,6 +3,7 @@ package utils;
 import java.util.Calendar;
 import java.util.Date;
 
+import main.AdministradorDeCategorias;
 import main.Categoria;
 
 public class Validador {
@@ -164,14 +165,9 @@ public class Validador {
 	}
 	
 	static public void validateCategoria(int categoria, boolean titular, int dia, int mes, int anio) throws ValidadorException{
-		if (!isValidCategoria(categoria, titular, dia, mes, anio)) throw new ValidadorException("La categoría no corresponde a la edad del socio.");
-	}
 	
-
-	static public boolean isValidCategoria(int categoria, boolean titular, int dia, int mes, int anio){
-								
-		if (categoria == Categoria.VITALICIO) return true;
-			
+		if (categoria == Categoria.VITALICIO) return;
+		
 		//La fecha recibida es valida.
 		Date d = new Date(anio - 1900,  mes, dia);
 
@@ -180,33 +176,35 @@ public class Validador {
 		
 		if (categoria == Categoria.FAMILIAR){
 			if (titular){
-				return (d.compareTo(DateUtil.getDate(21)) <= 0);
+				if (d.compareTo(DateUtil.getDate(21)) <= 0){
+					return;
+				} else {
+					throw new ValidadorException("El titular de un grupo familiar no puede ser menor de edad.");
+				}
 			}
 			else {
-				return true;
+				return;
 			}
 		}
-		
-		Date now = DateUtil.getDate(0);
-		
-		if (categoria == Categoria.MENOR){
-			nacimiento.add(Calendar.YEAR,14);
-			return (now.compareTo(nacimiento.getTime()) < 0);
-		}
-		else if (categoria == Categoria.CADETE){
-			nacimiento.add(Calendar.YEAR,14);
-			if (now.compareTo(nacimiento.getTime()) < 0) return false;
-			
-			nacimiento.add(Calendar.YEAR,7);
-			return (now.compareTo(nacimiento.getTime()) < 0);
-		}
-		else if (categoria == Categoria.MAYOR){
-			nacimiento.add(Calendar.YEAR,21);
-			return (now.compareTo(nacimiento.getTime()) >= 0);			
-		}
 
+		if (AdministradorDeCategorias.getCategoria(nacimiento.getTime()).getIdCategoria() == categoria)
+			return;
 		
-		return false;
+		throw new ValidadorException("La categoría no corresponde a la edad del socio.");
+		
+	}
+	
+
+	static public boolean isValidCategoria(int categoria, boolean titular, int dia, int mes, int anio){
+				
+		try{
+			validateCategoria(categoria, titular, dia, mes, anio);
+		} catch (ValidadorException e){
+			return false;
+		}
+		
+		return true;
+		
 	}
 	
 	/***
