@@ -151,6 +151,9 @@ public class FrmRendicion extends JDialog {
         getContentPane().add(panelPrincipal, new AbsoluteConstraints(0, 0, 730, 480));
 
         pack();
+        
+        if (zona.getItemCount() > 0)
+        	zona.setSelectedIndex(0);
     }
 
     protected void reciboSeleccionado() {
