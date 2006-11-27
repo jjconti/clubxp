@@ -292,7 +292,7 @@ public class AdministradorDeLiquidaciones {
 
 		if (recibos.isEmpty()) return 0;
 		Recibo reciboMin = primerReciboLiquidado(recibos);
-		
+
 		
 		do {
 			mesActual--;
@@ -369,6 +369,9 @@ public class AdministradorDeLiquidaciones {
 		
 		if (recibo.getSocio().getZona().getIdZona() != idZona)
 			throw new ValidadorException("El recibo no pertenece a la zona seleccionada.");
+		
+//		if (mesesQueDebe(ultimaLiq.getRecibosFor(recibo.getSocio()), recibo.getMes(), recibo.getAnio()) >= 1)
+//			throw new ValidadorException("Primero debe devolver el recibo anterior.");
 		
 		recibo.setDevuelto(valor);
 		
