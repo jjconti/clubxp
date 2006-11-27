@@ -174,6 +174,8 @@ public class FrmPrincipal extends JFrame {
 				anioProximaLiquidacion,"Liquidación",JOptionPane.INFORMATION_MESSAGE);
 		
 		botonLiquidar();
+		
+		new FrmRecibos().setVisible(true);
 
     }
     
