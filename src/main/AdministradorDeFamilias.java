@@ -44,11 +44,19 @@ public class AdministradorDeFamilias {
 		Iterator i = asociados.iterator();
 		while(i.hasNext()){
 			Integer idSocio = (Integer)i.next();
-			int deuda = deuda = AdministradorDeLiquidaciones.mesesQueDebe(idSocio.intValue());
+			int deuda = AdministradorDeLiquidaciones.mesesQueDebe(idSocio.intValue());
 			if (deuda > 0 )
-				throw new ValidadorException("El socio numero " + idSocio + " adeuda " + deuda + " meses." );
+				throw new ValidadorException("El socio número " + idSocio + " adeuda " 
+						+ deuda + ((deuda == 1) ? "mes." : " meses."));
 			
 		}
+		
+		//Comprueba que el titular no tenga deudas
+		int deuda = AdministradorDeLiquidaciones.mesesQueDebe(idTitular);
+		if (deuda > 0 )
+			throw new ValidadorException("El socio número " + idTitular + " adeuda " 
+					+ deuda + ((deuda == 1) ? "mes." : " meses."));
+		
 		
 		i = asociados.iterator();
 		while(i.hasNext()){

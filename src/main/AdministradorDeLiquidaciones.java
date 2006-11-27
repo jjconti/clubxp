@@ -388,7 +388,7 @@ public class AdministradorDeLiquidaciones {
 		
 		Query q = s.createQuery("from Recibo r where r.socio.zona.idZona = " + idZona +
 				" AND r.liquidacion.idLiq = " + ultimaLiq.getIdLiq() +
-				" AND r.devuelto = true" );
+				" AND r.devuelto = true ORDER BY r.numeroRecibo ASC" );
 		List lista = q.list();
 		
 		return lista;

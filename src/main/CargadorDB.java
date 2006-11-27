@@ -41,7 +41,7 @@ public class CargadorDB {
 		Socio socio1 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Pepe", "Argento", "DNI", 31445684, DateUtil.getDate(25), 1);
 		Socio socio2 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Mónica", "Argento", "DNI", 31445685, DateUtil.getDate(25), 1);
 		Socio socio3 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Coqui", "Argento", "DNI", 31445686, DateUtil.getDate(25), 1);
-		Socio socio4 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "NoSeComoSeLlamaLaRubia", "Argento", "DNI", 31445687, DateUtil.getDate(25), 1);
+		Socio socio4 = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "Paola", "Argento", "DNI", 31445687, DateUtil.getDate(25), 1);
 		
 		//Crea el grupo familiar
 		Vector asociados = new Vector();
