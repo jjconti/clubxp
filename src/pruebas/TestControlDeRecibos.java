@@ -31,8 +31,8 @@ public class TestControlDeRecibos extends TestCase {
 		
 		socios = new Socio[14];
 		
-		//Elimina recibos y liquidaciones
-		AdministradorDeLiquidaciones.eliminarLiquidaciones();
+		//Elimina socios, recibos y liquidaciones
+		AdministradorDeSocios.eliminarSocios();
 		
 		//Crea socios (TODOS EN ZONA 1)
 		socios[0] = AdministradorDeSocios.CrearSocio(1, Categoria.MAYOR, "SocioA", "ApellidoA", "DNI", 33222333, DateUtil.getDate(25), 1);
@@ -186,6 +186,174 @@ public class TestControlDeRecibos extends TestCase {
 		}
 		
 	}
+	
+	public void testSetDevueltoReciboAnterior() throws ValidadorException{
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion1 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		//Pone como devuelto un recibo del socio 0, de la primer liquidación
+		List recibos1 = liquidacion1.getRecibosFor(socios[0]);
+		Recibo r = (Recibo) recibos1.get(0);
+		AdministradorDeLiquidaciones.setDevuelto(r.getNumeroRecibo(), 1, true);
+		
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion2 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		List recibos2 = liquidacion2.getRecibosFor(socios[0]);
+		
+		Recibo r1 = (Recibo) recibos2.get(0); 
+		Recibo r2 = (Recibo) recibos2.get(1);
+		
+		//Primero hay que establecer como devuelto el recibo mas nuevo
+		Recibo rNuevo;
+		Recibo rViejo;
+		
+		if ((r1.getAnio() > r2.getAnio()) || 
+				((r1.getAnio() == r2.getAnio()) && (r1.getMes() > r2.getMes()))){
+			rNuevo = r1;
+			rViejo = r2;
+		}else{
+			rNuevo = r2;
+			rViejo = r1;
+		}
+			
+		try {
+			//Establece como devuelto el recibo mas nuevo
+			AdministradorDeLiquidaciones.setDevuelto(rNuevo.getNumeroRecibo(),	1, true);
+			//Establece como devuelto el recibo mas viejo
+			AdministradorDeLiquidaciones.setDevuelto(rViejo.getNumeroRecibo(),	1, true);
+		} catch (ValidadorException e){
+			fail();
+		}
+		
+	}
+	
+	public void testSetDevueltoReciboAnteriorBad() throws ValidadorException{
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion1 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		//Pone como devuelto un recibo del socio 0, de la primer liquidación
+		List recibos1 = liquidacion1.getRecibosFor(socios[0]);
+		Recibo r = (Recibo) recibos1.get(0);
+		AdministradorDeLiquidaciones.setDevuelto(r.getNumeroRecibo(), 1, true);
+		
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion2 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		List recibos2 = liquidacion2.getRecibosFor(socios[0]);
+		
+		Recibo r1 = (Recibo) recibos2.get(0); 
+		Recibo r2 = (Recibo) recibos2.get(1);
+		
+		//Primero hay que establecer como devuelto el recibo mas nuevo
+		Recibo rNuevo;
+		Recibo rViejo;
+		
+		if ((r1.getAnio() > r2.getAnio()) || 
+				((r1.getAnio() == r2.getAnio()) && (r1.getMes() > r2.getMes()))){
+			rNuevo = r1;
+			rViejo = r2;
+		}else{
+			rNuevo = r2;
+			rViejo = r1;
+		}
+			
+		try {
+			//Establece como devuelto el recibo mas viejo
+			AdministradorDeLiquidaciones.setDevuelto(rViejo.getNumeroRecibo(),	1, true);
+			fail();
+		} catch (ValidadorException e){
+		}
+		
+	}
+	
+	
+	public void testSetPagadoReciboAnterior() throws ValidadorException{
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion1 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		//Pone como devuelto un recibo del socio 0, de la primer liquidación
+		List recibos1 = liquidacion1.getRecibosFor(socios[0]);
+		Recibo r = (Recibo) recibos1.get(0);
+		AdministradorDeLiquidaciones.setDevuelto(r.getNumeroRecibo(), 1, true);
+		
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion2 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		List recibos2 = liquidacion2.getRecibosFor(socios[0]);
+		
+		Recibo r1 = (Recibo) recibos2.get(0); 
+		Recibo r2 = (Recibo) recibos2.get(1);
+		
+		//Primero hay que establecer como devuelto el recibo mas nuevo
+		Recibo rNuevo;
+		Recibo rViejo;
+		
+		if ((r1.getAnio() > r2.getAnio()) || 
+				((r1.getAnio() == r2.getAnio()) && (r1.getMes() > r2.getMes()))){
+			rNuevo = r1;
+			rViejo = r2;
+		}else{
+			rNuevo = r2;
+			rViejo = r1;
+		}
+		
+		//Establece como devuelto el recibo mas nuevo
+		AdministradorDeLiquidaciones.setDevuelto(rNuevo.getNumeroRecibo(),	1, true);
+		//Establece como devuelto el recibo mas viejo
+		AdministradorDeLiquidaciones.setDevuelto(rViejo.getNumeroRecibo(),	1, true);
+		
+		try {
+			//Establece como pagado el recibo mas viejo
+			AdministradorDeLiquidaciones.setDevuelto(rViejo.getNumeroRecibo(),	1, false);
+			//Establece como pagado el recibo mas nuevo
+			AdministradorDeLiquidaciones.setDevuelto(rNuevo.getNumeroRecibo(),	1, false);
+		} catch (ValidadorException e){
+			fail();
+		}
+		
+	}
+	
+	public void testSetPagadoReciboAnteriorBad() throws ValidadorException{
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion1 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		
+		//Pone como devuelto un recibo del socio 0, de la primer liquidación
+		List recibos1 = liquidacion1.getRecibosFor(socios[0]);
+		Recibo r = (Recibo) recibos1.get(0);
+		AdministradorDeLiquidaciones.setDevuelto(r.getNumeroRecibo(), 1, true);
+		
+		AdministradorDeLiquidaciones.HacerLiquidacion();
+		Liquidacion liquidacion2 = AdministradorDeLiquidaciones.getUltimaLiquidacion();
+		List recibos2 = liquidacion2.getRecibosFor(socios[0]);
+		
+		Recibo r1 = (Recibo) recibos2.get(0); 
+		Recibo r2 = (Recibo) recibos2.get(1);
+		
+		//Primero hay que establecer como devuelto el recibo mas nuevo
+		Recibo rNuevo;
+		Recibo rViejo;
+		
+		if ((r1.getAnio() > r2.getAnio()) || 
+				((r1.getAnio() == r2.getAnio()) && (r1.getMes() > r2.getMes()))){
+			rNuevo = r1;
+			rViejo = r2;
+		}else{
+			rNuevo = r2;
+			rViejo = r1;
+		}
+		
+		//Establece como devuelto el recibo mas nuevo
+		AdministradorDeLiquidaciones.setDevuelto(rNuevo.getNumeroRecibo(),	1, true);
+		//Establece como devuelto el recibo mas viejo
+		AdministradorDeLiquidaciones.setDevuelto(rViejo.getNumeroRecibo(),	1, true);
+			
+		try {
+			//Establece como pagado el recibo mas nuevo
+			AdministradorDeLiquidaciones.setDevuelto(rNuevo.getNumeroRecibo(),	1, false);
+			fail();
+		} catch (ValidadorException e){
+		}
+		
+	}
+	
 	
 	/**
 	 * Comprueba que no se devuelvan recibos de liquidaciones anteriores,
