@@ -313,6 +313,15 @@ public class AdministradorDeLiquidaciones {
 		
 	}
 	
+	public static int mesesQueDebe(int idSocio){
+		int mesActual = getMesProximaLiq().intValue();
+		int anioActual = getAnioProximaLiq().intValue();
+		
+		Socio socio = AdministradorDeSocios.ObtenerSocio(idSocio);
+		return mesesQueDebe(getRecibos(socio), mesActual, anioActual);
+		
+	}
+	
 	private static Recibo primerReciboLiquidado(List recibos){
 		Recibo reciboMin = new Recibo();
 		reciboMin.setAnio(Integer.MAX_VALUE);
