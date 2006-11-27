@@ -370,29 +370,49 @@ public class AdministradorDeLiquidaciones {
 		if (recibo.getSocio().getZona().getIdZona() != idZona)
 			throw new ValidadorException("El recibo no pertenece a la zona seleccionada.");
 		
-		int mesActual = recibo.getMes();
-		int anioActual = recibo.getAnio();
-		mesActual--;
-		if (mesActual == 0) {
-			mesActual = 12;
-			anioActual--;
-		}
-		
-		List recibos = ultimaLiq.getRecibosFor(recibo.getSocio());
-		Iterator i = recibos.iterator();
-		
-		while (i.hasNext()){
-			Recibo r = (Recibo) i.next();
-			if (r.getMes() == mesActual && r.getAnio() == anioActual && r.isDevuelto() && valor == false)
-				throw new ValidadorException("Primero debe pagar el recibo del mes anterior.");
-			
-		}
-		
-			
-			
-		
 //		if (mesesQueDebe(ultimaLiq.getRecibosFor(recibo.getSocio()), recibo.getMes(), recibo.getAnio()) >= 1)
 //			throw new ValidadorException("Primero debe devolver el recibo anterior.");
+		
+		if (valor == false){
+			int mesActual = recibo.getMes();
+			int anioActual = recibo.getAnio();
+			mesActual--;
+			if (mesActual == 0) {
+				mesActual = 12;
+				anioActual--;
+			}
+			
+			List recibos = ultimaLiq.getRecibosFor(recibo.getSocio());
+			Iterator i = recibos.iterator();
+			
+			while (i.hasNext()){
+				Recibo r = (Recibo) i.next();
+				if (r.getMes() == mesActual && r.getAnio() == anioActual && r.isDevuelto())
+					throw new ValidadorException("Primero debe pagar el recibo del mes anterior.");
+				
+			}
+		}
+		else if (valor == true){
+			int mesActual = recibo.getMes();
+			int anioActual = recibo.getAnio();
+			mesActual++;
+			if (mesActual == 13) {
+				mesActual = 1;
+				anioActual++;
+			}
+			
+			List recibos = ultimaLiq.getRecibosFor(recibo.getSocio());
+			Iterator i = recibos.iterator();
+			
+			while (i.hasNext()){
+				Recibo r = (Recibo) i.next();
+				if (r.getMes() == mesActual && r.getAnio() == anioActual && !r.isDevuelto())
+					throw new ValidadorException("Primero debe devolver el recibo del mes siguiente.");
+				
+			}
+			
+		}
+		
 		
 		recibo.setDevuelto(valor);
 		

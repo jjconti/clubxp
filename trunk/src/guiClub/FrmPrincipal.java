@@ -160,7 +160,7 @@ public class FrmPrincipal extends JFrame {
         if (AdministradorDeLiquidaciones.sePuedeLiquidar(Calendar.getInstance().getTime())){
         	botonLiquidar.setEnabled(true);
         } else {
-        	botonLiquidar.setEnabled(false);
+      //  	botonLiquidar.setEnabled(false);
         }
 		
 	}
