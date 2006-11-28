@@ -124,6 +124,7 @@ public class FrmGestionGrupos extends JDialog{
 		titulos2.addElement("Número");
 
 		cargarDatosTitulares();
+		tablaGrupos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		tablaGrupos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
